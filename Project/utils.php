@@ -283,5 +283,79 @@ function createAdmin($username, $first, $last, $pass, $email, $phone){
 }
 
 
+function deleteUser($username){
+    global $db;
+
+    $query = "DELETE FROM account WHERE username = :username ON DELETE CASCADE;";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':username', $username);
+    $statement->execute();
+
+    $statement->closeCursor();
+}
+
+function getUserInfo($username){
+    global $db;
+
+    $query = "SELECT * FROM account WHERE username = “:username”;";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':username', $username);
+    $statement->execute();
+
+    $userinfo = $statement->fetchAll();
+
+    $statement->closeCursor();
+
+    return $userinfo;
+}
+
+function updateUserInfo($username,$attr, $val){
+
+    global $db;
+
+    $query = "UPDATE account SET :attr = :val WHERE username = “:username”";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':username', $username);
+    $statement->bindValue(':attr', $attr);
+    $statement->bindValue(':val', $val);
+    $statement->execute();
+
+    $statement->closeCursor();
+
+}
+
+
+function getAllMovieInfo(){
+    global $db;
+
+    $query = "SELECT title, year, runtime, age_rating FROM movies;";
+    $statement = $db->prepare($query);
+
+    $statement->execute();
+    $movies = $statement->fetchAll();
+
+    $statement->closeCursor();
+
+    return $movies;
+}
+
+function getMovieInfo($mid){
+    global $db;
+
+    $query = "SELECT * FROM movies NATURAL JOIN lead_actors WHERE movie_id = :mid;";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':mid', $mid);
+    $statement->execute();
+    $movies = $statement->fetchAll();
+
+    $statement->closeCursor();
+
+    return $movies;
+}
+
+
+
+
+
 
 
