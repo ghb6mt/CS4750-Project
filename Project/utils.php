@@ -484,6 +484,7 @@ function getAverageRatingForMovie($movieId){
 
 function login($username, $password){
     global $db;
+    echo "<html><p>Successfully logged in.</p></html>";
 
     $query = 'SELECT * FROM account WHERE username = :username AND password = :password';
 
@@ -502,9 +503,12 @@ function login($username, $password){
         echo "Username or password incorrect.";
         return -2;
     }
-
     
+    $_SESSION['username'] = $result['username'];
+    $_SESSION['is_admin'] = $result['is_admin'];
     $statement->closeCursor();
+
+    return true;
 }
 
 
