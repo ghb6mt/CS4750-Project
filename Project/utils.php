@@ -352,6 +352,135 @@ function getMovieInfo($mid){
 
     return $movies;
 }
+function getMoviesAtTheater($theaterId){
+    global $db;
+
+    $query = "SELECT title, year, runtime, age_rating FROM movies NATURAL JOIN showing_info WHERE theatre_id = :theaterId";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':theaterId', $theaterId);
+
+    $statement->execute();
+    $movies = $statement->fetchAll();
+    $statement->closeCursor();
+
+    return $movies;
+}
+
+function getMovieShowings($theaterId, $timeStart, $timeEnd){
+    global $db;
+
+    $query = "SELECT showing_info.* FROM showing_info WHERE theater_id = :theaterId AND time BETWEEN :timeStart AND :timeEnd";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':theaterId', $theaterId);
+    $statement->bindValue(':timeStart', $timeStart);
+    $statement->bindValue(':timeEnd', $timeEnd);
+
+    $statement->execute();
+    $showings = $statement->fetchAll();
+    $statement->closeCursor();
+
+    return $showings;
+}
+
+function getAverageRating($movieId){
+    global $db;
+
+    $query = "SELECT movie_id, year, AVG(number_of_stars) AS average_rating FROM rating WHERE movie_id = :movieId GROUP BY movie_id";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':movieId', $movieId);
+
+    $statement->execute();
+    $rating = $statement->fetchAll();
+    $statement->closeCursor();
+
+    return $rating;
+}
+
+function searchByTitle($title){
+    global $db;
+
+    $query = "SELECT title, year FROM movies WHERE title LIKE :title";
+    $statement = $db->prepare($query);
+    $title = '%' . $title . '%';
+    $statement->bindValue(':title', $title);
+
+    $statement->execute();
+    $movies = $statement->fetchAll();
+    $statement->closeCursor();
+
+    return $movies;
+}
+
+function searchByGenre($genre){
+    global $db;
+
+    $query = "SELECT title, year FROM genres NATURAL JOIN movies WHERE genre = :genre";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':genre', $genre);
+
+    $statement->execute();
+    $movies = $statement->fetchAll();
+    $statement->closeCursor();
+
+    return $movies;
+}
+
+function searchByLeadActor($actor){
+    global $db;
+
+    $query = "SELECT title, year FROM lead_actors NATURAL JOIN movies WHERE lead_actor = :actor";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':actor', $actor);
+
+    $statement->execute();
+    $movies = $statement->fetchAll();
+    $statement->closeCursor();
+
+    return $movies;
+}
+
+function searchByRating($rating){
+    global $db;
+
+    $query = "SELECT title, year FROM movies NATURAL JOIN rating WHERE AVG(number_of_stars) = :rating";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':rating', $rating);
+
+    $statement->execute();
+    $movies = $statement->fetchAll();
+    $statement->closeCursor();
+
+    return $movies;
+}
+
+function searchByRuntime($runtime){
+    global $db;
+
+    $query = "SELECT title, year FROM movies WHERE runtime <= :runtime";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':runtime', $runtime);
+
+    $statement->execute();
+    $movies = $statement->fetchAll();
+    $statement->closeCursor();
+
+    return $movies;
+}
+
+function getAverageRatingForMovie($movieId){
+    global $db;
+
+    $query = "CALL calc_avg_rating(:movieId, @avg_rating)";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':movieId', $movieId);
+
+    $statement->execute();
+
+    $result = $db->query("SELECT @avg_rating AS average_rating")->fetch(PDO::FETCH_ASSOC);
+    $statement->closeCursor();
+
+    return $result['average_rating'];
+}
 
 
 
