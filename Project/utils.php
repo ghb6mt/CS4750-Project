@@ -552,6 +552,36 @@ function allMovies(){
     return $movies;
 }
 
+function getAllTheaters(){
+    global $db;
+
+    $query = "SELECT * FROM theaters;";
+    $statement = $db->prepare($query);
+
+    $statement->execute();
+    $theaters = $statement->fetchAll();
+
+    $statement->closeCursor();
+
+    return $theaters;
+
+}
+
+function getTheaterCompany($tid){
+    global $db;
+
+    $query = "SELECT company FROM theater_company where :tid = theater_id;";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':tid', $tid);
+
+    $statement->execute();
+    $theaters = $statement->fetchAll();
+
+    $statement->closeCursor();
+
+    return $theaters;
+}
+
 
 
 
