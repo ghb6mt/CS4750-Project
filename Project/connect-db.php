@@ -46,7 +46,7 @@
 $username = 'dnj6xk'; //FIX THESE
 $password = 'Superc00l1';
 $host = 'mysql01.cs.virginia.edu';
-$dbname = '';
+$dbname = 'dnj6xk_c';
 $dsn = "mysql:host=$host;dbname=$dbname";
 ////////////////////////////////////////////
 
