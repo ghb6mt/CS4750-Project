@@ -2,7 +2,8 @@
 
 session_start();
 
-include "connect-db.php";
+require "connect-db.php";
+require "utils.php";
 
 if(isset($_POST['uname']) && isset($_POST['password'])){
     function validate($data){
