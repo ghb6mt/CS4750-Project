@@ -510,7 +510,33 @@ function login($username, $password){
     return true;
 }
 
+function getMovieGenre($mid){
+    global $db;
 
+    $query = "SELECT genre FROM genres WHERE movie_id = :mid;";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':mid', $mid);
+    $statement->execute();
+    $movies = $statement->fetchAll();
+
+    $statement->closeCursor();
+
+    return $movies;
+}
+
+function getMovieLeadActor($mid){
+    global $db;
+
+    $query = "SELECT lead_actor FROM lead_actors WHERE movie_id = :mid;";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':mid', $mid);
+    $statement->execute();
+    $movies = $statement->fetchAll();
+
+    $statement->closeCursor();
+
+    return $movies;
+}
 
 
 
