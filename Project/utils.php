@@ -482,6 +482,31 @@ function getAverageRatingForMovie($movieId){
     return $result['average_rating'];
 }
 
+function login($username, $password){
+    global $db;
+
+    $query = 'SELECT * FROM account WHERE username = :username AND password = :password';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':password', $password);
+    $statement->bindValue(':username', $username);
+
+    $statement->execute();
+
+    $result = $statement->fetchAll(); // Returns PDO
+    
+    if(count($result)  > 1){
+        echo "Error on login";
+        return -1;
+    } elseif(count($result) < 1){
+        echo "Username or password incorrect.";
+        return -2;
+    }
+
+    
+    $statement->closeCursor();
+}
+
 
 
 
