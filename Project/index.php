@@ -5,7 +5,7 @@ session_start();
 require("connect-db.php");
 require("utils.php");
 
-$movielist = getAllMovieInfo();
+$movielist = allMovies();
 ?>
 
 <h3>List of Movies</h3>
@@ -23,9 +23,11 @@ $movielist = getAllMovieInfo();
     <?php foreach ($movielist as $movie): ?>
         <tr>
             <td><?php echo $movie['title']; ?></td>
-            <td>fixing</td>
+            <?php $leadActor = getMovieLeadActor($movie['movie_id']); ?>
+            <td><?php echo $leadActor[0][0] ?></td>
             <td><?php echo $movie['age_rating']; ?></td>
-            <td>genre</td>
+            <?php $genres = getMovieGenre($movie['movie_id']); ?>
+            <td><?php echo $genres[0][0] ?></td>
             <td><?php echo $movie['runtime']; ?></td>
     </tr>
     <?php endforeach; ?>

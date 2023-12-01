@@ -538,12 +538,12 @@ function getMovieLeadActor($mid){
     return $movies;
 }
 
-function allMovies() {
+function allMovies(){
     global $db;
 
-    $query = "SELECT * FROM movies";
+    $query = "SELECT * FROM movies;";
     $statement = $db->prepare($query);
-    $statement->bindValue(':mid', $mid);
+
     $statement->execute();
     $movies = $statement->fetchAll();
 
