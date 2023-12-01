@@ -23,13 +23,13 @@ if(isset($_POST['uname']) && isset($_POST['password'])){
      switch(login($uname, $password)){
         // LOGIN SUCCESSFUL
         case 1:
-            header('amazon.com');
+            header('http://www.amazon.com/');
         // MORE THAN ONE USER FOUND
         case -1:
-            header('geico.com');
+            header('http://www.geico.com/');
         // UNAME OR PASSWORD INCORRECT
         case -2:
-            header('geico.com');
+            header('http://www.geico.com/');
      }
 
      }
