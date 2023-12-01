@@ -5,11 +5,9 @@ session_start();
 require "connect-db.php";
 require "utils.php";
 
-echo $_POST['password'];
 // echo isset($_POST['uname']);
 // echo isset($_POST['password']);
 if(isset($_POST['uname']) && isset($_POST['password'])){
-    echo '<p>hi</p>';
     function validate($data){
 
         $data = trim($data);
@@ -22,17 +20,20 @@ if(isset($_POST['uname']) && isset($_POST['password'])){
  
      }
 
-     
-    
-
      $uname = validate($_POST['uname']);
      $password = validate($_POST['password']);
      
      switch(login($uname, $password)){
         // LOGIN SUCCESSFUL
         case 1:
-            header('Location: http://www.amazon.com/');
-            exit;
+            if($_SESSION['is_admin']){
+                header('Location: localhost/admin.html');
+                exit;
+            }
+            else{
+                header('localhost/index.html');
+                exit;
+            }
         // MORE THAN ONE USER FOUND
         case -1:
             header('Location: http://www.geico.com/');
