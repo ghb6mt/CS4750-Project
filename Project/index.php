@@ -9,6 +9,11 @@ $movielist = allMovies();
 include('navbar.html')
 ?>
 
+<form action="users.php" method="GET">
+<input id="search" name="search" type="text" placeholder="Type here">
+<input id="submit" type="submit" value="Search">
+</form>
+
 <h3>List of Movies</h3>
 <div class="row justify-content center">
     <table class="w3-table w3-bordered w3-card-4 center" style="width:70%">
@@ -36,6 +41,6 @@ include('navbar.html')
 </div>
 
 <form method="POST" action="movie.php">
-            <input type="number" name="id" value="<?php echo $move['movie_id'] ?>">
+            <input type="number" placeholder="movie id here" name="id">
             <input type="submit" value="Go to Movie Page">
         </form>
