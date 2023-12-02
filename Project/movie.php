@@ -16,8 +16,10 @@ $movie_id = $_POST['id'];
     <?php $movie_info = getMovieInfo($movie_id); ?>
     <p><?php echo $movie_info[0]['title'] ?></p>
     <p><?php echo $movie_info[0]['description'] ?></p>
-    <p>Genre: </p>
-    <p>Lead Actor: </p>
+    <?php $movie_genre = getMovieGenre($movie_id); ?>
+    <p>Genre: <?php echo $movie_genre[0][0] ?></p>
+    <?php $movie_lead_actor = getMovieLeadActor($movie_id); ?>
+    <p>Lead Actor: <?php echo $movie_lead_actor[0][0] ?></p>
     <p>Rating: <?php echo $movie_info[0]['age_rating'] ?></p>
     <p>Runtime: <?php echo $movie_info[0]['runtime'] ?></p>
     <p>Year: <?php echo $movie_info[0]['year'] ?></p>
