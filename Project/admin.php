@@ -7,6 +7,8 @@ require("utils.php");
 
 $movielist = allMovies();
 $theaterlist = getAllTheaters();
+$showingList = getAllShowings();
+$snackList = getAllSnacks();
 ?>
 
 <head>
