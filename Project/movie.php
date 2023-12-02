@@ -21,8 +21,34 @@ $movie_id = $_POST['id'];
     <?php $movie_lead_actor = getMovieLeadActor($movie_id); ?>
     <p>Lead Actor: <?php echo $movie_lead_actor[0][0] ?></p>
     <p>Rating: <?php echo $movie_info[0]['age_rating'] ?></p>
-    <p>Runtime: <?php echo $movie_info[0]['runtime'] ?></p>
+    <p>Runtime: <?php echo $movie_info[0]['runtime'] ?> minutes</p>
     <p>Year: <?php echo $movie_info[0]['year'] ?></p>
-    <p>Next Showing: </p>
-
+    <p>Next Showings: </p>
+    <?php $showtimes = getSpecificMovieShowings($movie_id); ?>
+    <div class="row justify-content center">
+    <table class="w3-table w3-bordered w3-card-4 center" style="width:70%">
+    <thead>
+        <tr style="background-color:#B0B0B0">
+            <th width="30%">Time
+            <th width="30%">Room
+            <th width="30%">City
+            <th width="30%">Street
+            <th width="30%">State
+            <th width="30%">ZIP Code
+        </tr>
+    </thead>
+    <?php foreach ($showtimes as $show): ?>
+        <tr>
+            <td><?php echo $show['time']; ?></td>
+            <td><?php echo $show['room']; ?></td>
+            <?php $theater_name = getTheater($show['theater_id']); ?>
+            <td><?php echo $theater_name[0]['city']; ?></td>
+            <td><?php echo $theater_name[0]['street']; ?></td>
+            <td><?php echo $theater_name[0]['state']; ?></td>
+            <?php $zc = getZipCode($theater_name[0]['city'], $theater_name[0]['street'], $theater_name[0]['state']); ?>
+            <td><?php echo $zc[0][0]; ?></td>
+    </tr>
+    <?php endforeach; ?>
+    </table>
+</div>
 </body>
