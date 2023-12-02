@@ -7,6 +7,8 @@ require("utils.php");
 
 $movielist = allMovies();
 $theaterlist = getAllTheaters();
+$showingList = getAllShowings();
+$snackList = getAllSnacks();
 ?>
 
 <head>
@@ -39,52 +41,143 @@ $theaterlist = getAllTheaters();
 
     <h3>List of Movies</h3>
 <div class="row justify-content center">
-    <table class="w3-table w3-bordered w3-card-4 center" style="width:70%">
-    <thead>
-        <tr style="background-color:#B0B0B0">
-            <th width="30%">Movie Title
-            <th width="30%">Movie ID   
-            <th width="30%">Lead Actor
-            <th width="30%">Age Rating
-            <th width="30%">Genre
-            <th width="30%">Runtime
-        </tr>
-    </thead>
-    <?php foreach ($movielist as $movie): ?>
-        <tr>
-            <td><?php echo $movie['title']; ?></td>
-            <td><?php echo $movie['movie_id']; ?></td>
-            <?php $leadActor = getMovieLeadActor($movie['movie_id']); ?>
-            <td><?php echo $leadActor[0][0] ?></td>
-            <td><?php echo $movie['age_rating']; ?></td>
-            <?php $genres = getMovieGenre($movie['movie_id']); ?>
-            <td><?php echo $genres[0][0] ?></td>
-            <td><?php echo $movie['runtime']; ?></td>
-    </tr>
-    <?php endforeach; ?>
-    </table>
+    <form action="edit_or_delete.php" method="post">
+        <table class="w3-table w3-bordered w3-card-4 center" style="width:70%">
+            <thead>
+                <tr style="background-color:#B0B0B0">
+                    <th width="30%">Movie Title
+                    <th width="30%">Movie ID   
+                    <th width="30%">Lead Actor
+                    <th width="30%">Age Rating
+                    <th width="30%">Genre
+                    <th width="30%">Runtime
+                </tr>
+            </thead>
+            <?php foreach ($movielist as $movie): ?>
+                <tr>
+                    <td><?php echo $movie['title']; ?></td>
+                    <td><?php echo $movie['movie_id']; ?></td>
+                    <?php $leadActor = getMovieLeadActor($movie['movie_id']); ?>
+                    <td><?php echo $leadActor[0][0] ?></td>
+                    <td><?php echo $movie['age_rating']; ?></td>
+                    <?php $genres = getMovieGenre($movie['movie_id']); ?>
+                    <td><?php echo $genres[0][0] ?></td>
+                    <td><?php echo $movie['runtime']; ?></td>
+                    <td>
+                        <input type="hidden" name="movie_id" value="<?php echo $movie['movie_id']; ?>">
+                        <button type="submit" name="action" value="edit" class="btn btn-warning">Edit</button>
+                        <button type="submit" name="action" value="delete" class="btn btn-danger">Delete</button>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </form>
+</div>
 
-    <h3>List of Theaters</h3>
+
+<h3>List of Theaters</h3>
 <div class="row justify-content center">
-    <table class="w3-table w3-bordered w3-card-4 center" style="width:70%">
-    <thead>
-        <tr style="background-color:#B0B0B0">
-            <th width="30%">Company
-            <th width="30%">City
-            <th width="30%">Street
-            <th width="30%">State
-            <th width="30%">Theater ID
-        </tr>
-    </thead>
-    <?php foreach ($theaterlist as $theater): ?>
-        <tr>
-        <?php $company = getTheaterCompany($theater['theater_id']); ?>
-            <td><?php echo $company[0]['company']?></td>
-            <td><?php echo $theater['city']; ?></td>
-            <td><?php echo $theater['street']; ?></td>
-            <td><?php echo $theater['state']; ?></td>
-            <td><?php echo $theater['theater_id']; ?></td>
-    </tr>
-    <?php endforeach; ?>
-    </table>
+    <form action="edit_or_delete.php" method="post">
+        <table class="w3-table w3-bordered w3-card-4 center" style="width:70%">
+            <thead>
+                <tr style="background-color:#B0B0B0">
+                    <th width="30%">Company
+                    <th width="30%">City
+                    <th width="30%">Street
+                    <th width="30%">State
+                    <th width="30%">Theater ID
+                </tr>
+            </thead>
+            <?php foreach ($theaterlist as $theater): ?>
+                <tr>
+                    <?php $company = getTheaterCompany($theater['theater_id']); ?>
+                    <td><?php echo $company[0]['company']?></td>
+                    <td><?php echo $theater['city']; ?></td>
+                    <td><?php echo $theater['street']; ?></td>
+                    <td><?php echo $theater['state']; ?></td>
+                    <td><?php echo $theater['theater_id']; ?></td>
+                    <td>
+                        <input type="hidden" name="theater_id" value="<?php echo $theater['theater_id']; ?>">
+                        <button type="submit" name="action" value="edit_theater" class="btn btn-warning">Edit</button>
+                        <button type="submit" name="action" value="delete_theater" class="btn btn-danger">Delete</button>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </form>
+</div>
+
+
+<h3>List of Showings</h3>
+<div class="row justify-content center">
+    <form action="edit_or_delete.php" method="post">
+        <table class="w3-table w3-bordered w3-card-4 center" style="width:70%">
+            <thead>
+                <tr style="background-color:#B0B0B0">
+                    <th width="30%">Movie
+                    <th width="30%">Theater
+                    <th width="30%">City
+                    <th width="30%">Street
+                    <th width="30%">State
+                    <th width="30%">Time
+                    <th width="30%">Room
+                </tr>
+            </thead>
+            <?php foreach ($showingList as $showing): ?>
+                <tr>
+                    <?php $movie = getMovieInfo($showing['movie_id']); ?>
+                    <?php $theaterComp = getTheaterCompany($showing['theater_id']); ?>
+                    <?php $theater = getTheater($showing['theater_id']); ?>
+                    <td><?php echo $movie[0]['title'];?></td>
+                    <td><?php echo $theaterComp[0]['company']; ?></td>
+                    <td><?php echo $theater[0]['city'] ?></td>
+                    <td><?php echo $theater[0]['street']; ?></td>
+                    <td><?php echo $theater[0]['state']; ?></td>
+                    <td><?php echo $showing['time']; ?></td>
+                    <td><?php echo $showing['room']; ?></td>
+                    <td>
+                        <input type="hidden" name="showing_id" value="<?php echo $showing['showing_id']; ?>">
+                        <button type="submit" name="action" value="edit_showing" class="btn btn-warning">Edit</button>
+                        <button type="submit" name="action" value="delete_showing" class="btn btn-danger">Delete</button>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </form>
+</div>
+
+
+<h3>List of Snacks</h3>
+<div class="row justify-content center">
+    <form action="edit_or_delete.php" method="post">
+        <table class="w3-table w3-bordered w3-card-4 center" style="width:70%">
+            <thead>
+                <tr style="background-color:#B0B0B0">
+                    <th width="30%">Movie
+                    <th width="30%">Snack Name
+                    <th width="30%">Price
+                    <th width="30%">Brand
+                    <th width="30%">Type
+                    <th width="30%">Calories
+                </tr>
+            </thead>
+            <?php foreach ($snackList as $snack): ?>
+                <tr>
+                    <?php $movie = getMovieInfo($snack['movie_id']); ?>
+                    <?php $theater = getTheater($showing['theater_id']); ?>
+                    <td><?php echo $movie[0]['title'];?></td>
+                    <td><?php echo $snack['name']; ?></td>
+                    <td><?php echo $snack['price'] ?></td>
+                    <td><?php echo $snack['brand']; ?></td>
+                    <td><?php echo $snack['type']; ?></td>
+                    <td><?php echo $snack['calories']; ?></td>
+                    <td>
+                        <input type="hidden" name="snack_id" value="<?php echo $snack['snack_id']; ?>">
+                        <button type="submit" name="action" value="edit_snack" class="btn btn-warning">Edit</button>
+                        <button type="submit" name="action" value="delete_snack" class="btn btn-danger">Delete</button>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </form>
 </div>

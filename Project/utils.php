@@ -188,7 +188,7 @@ function addSnack($mid, $name, $price, $brand, $type, $cals){
 function getSnacksForMovie($mid){
     global $db;
 
-    $query = "SELECT snacks.* FROM snacks JOIN movie_snack on snacks.snack_id = movie_snack.snack_id WHERE movie_snack.movie_id = :mid";
+    $query = "SELECT * from snacks where movie_id = :mid";
     $statement = $db->prepare($query);
     $statement->bindValue(':mid', $mid);
 
@@ -582,7 +582,47 @@ function getTheaterCompany($tid){
     return $theaters;
 }
 
+function getAllShowings(){
+    global $db;
 
+    $query = "SELECT * FROM showing_info";
+    $statement = $db->prepare($query);
 
+    $statement->execute();
+    $showings = $statement->fetchAll();
 
+    $statement->closeCursor();
 
+    return $showings;
+    
+}
+
+function getTheater($tid){
+    global $db;
+
+    $query = "SELECT * FROM theaters where theater_id = :tid";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':tid', $tid);
+
+    $statement->execute();
+    $theater = $statement->fetchAll();
+
+    $statement->closeCursor();
+
+    return $theater;
+}
+
+function getAllSnacks(){
+    global $db;
+
+    $query = "SELECT * FROM snacks NATURAL JOIN snack_info";
+    $statement = $db->prepare($query);
+
+    $statement->execute();
+    $snacks = $statement->fetchAll();
+
+    $statement->closeCursor();
+
+    return $snacks;
+    
+}
