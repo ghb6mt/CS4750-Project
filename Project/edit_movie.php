@@ -5,6 +5,26 @@ $movie_id = $_POST['movie_id']; // Assuming movie_id is passed as a query parame
 // Fetch movie data
 $movies = getMovieInfo($movie_id);
 
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+    if(!empty($_POST['update_movie'])){
+       foreach($_POST as $name => $value): //iterate over all fields
+        if($name != 'movie_id' && $name != 'lead_actor' && $name != 'genre'){ //cant call update on ID
+            updateMovie($name,$value,$_POST['movie_id']);
+        }
+        elseif($name == 'lead_actor'){
+            updateMovieLeadActor($value,$_POST['movie_id']);
+        }
+        elseif($name == 'genre'){
+            updateMovieGenre($value,$_POST['movie_id']);
+        }
+        else{
+            header("Location: admin.php");
+        }
+        endforeach;
+    }
+}
+
 // Assuming only one movie is returned for a given movie_id
 if (count($movies) > 0) {
     $movie = $movies[0]; // Get the first movie in the array
@@ -31,7 +51,7 @@ if (count($movies) > 0) {
     <!-- Include any other necessary HTML headers here -->
 </head>
 <body>
-    <form action="update_movie.php" method="post"> <!-- Separate file for update logic -->
+    <form action="edit_movie.php" method="post"> <!-- Separate file for update logic -->
         <input type="hidden" name="movie_id" value="<?php echo $movie_id; ?>">
         <label for="title">Movie Title:</label>
         <input type="text" id="title" name="title" value="<?php echo htmlspecialchars($title); ?>"><br>
@@ -43,18 +63,18 @@ if (count($movies) > 0) {
         <input type="text" id="year" name="year" value="<?php echo htmlspecialchars($year); ?>"><br>
 
         <label for="desc">Description:</label>
-        <textarea id="desc" name="desc"><?php echo htmlspecialchars($desc); ?></textarea><br>
+        <textarea id="desc" name="description"><?php echo htmlspecialchars($desc); ?></textarea><br>
 
         <label for="age">Age Rating:</label>
-        <input type="text" id="age" name="age" value="<?php echo htmlspecialchars($age); ?>"><br>
+        <input type="text" id="age" name="age_rating" value="<?php echo htmlspecialchars($age); ?>"><br>
 
         <label for="genre">Genre:</label>
         <input type="text" id="genre" name="genre" value="<?php echo htmlspecialchars($genre); ?>"><br>
 
         <label for="lead">Lead Actor:</label>
-        <input type="text" id="lead" name="lead" value="<?php echo htmlspecialchars($lead_actor); ?>"><br>
+        <input type="text" id="lead" name="lead_actor" value="<?php echo htmlspecialchars($lead_actor); ?>"><br>
 
-        <input type="submit" value="Submit">
+        <input type="submit" name="update_movie" value="Submit">
     </form>
 </body>
 </html>

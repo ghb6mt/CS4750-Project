@@ -7,17 +7,19 @@ require("connect-db.php");
 function addMovie($title, $runtime, $year, $desc, $age, $genre, $lead){
     global $db;
 
+    $desc = $db->quote($desc); //prepares string for insert
 
-    $midquery = "SELECT MAX(movie_id) FROM movies"; //do this to get next ID
+    $midquery = "SELECT MAX(movie_id) as movie_id FROM movies"; //do this to get next ID
     $midstatement = $db->prepare($midquery);
     $midstatement->execute();
-    $mid = $midstatement->fetchAll()[0][0] + 1;
+    $mid = $midstatement->fetch();
+    $mid = $mid['movie_id'] + 1;
     $midstatement->closeCursor();
 
 
     $query = "INSERT INTO movies VALUES (:mid, :title, :runtime, :year, :desc, :age);
-    INSERT INTO genres VALUES (':mid', :genre);
-    INSERT INTO lead_actors VALUES (':mid', :lead);
+    INSERT INTO genres VALUES (:mid, :genre);
+    INSERT INTO lead_actors VALUES (:mid, :lead);
     ";
 
 $statement = $db->prepare($query);
@@ -31,18 +33,6 @@ $statement->bindValue(':lead', $lead);
 $statement->bindValue(':mid', $mid);
 
 $statement->execute();
-
-if($statement){
-    echo"<div class=\"alert alert-success alert-dismissible fade show\" role=\"alert\">
-                Movie was added!
-                <button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" aria-label=\"Close\"></button>
-              </div>";
-}else{
-    echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                Movie couldn\'t be added!
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>';
-}
 
 $statement->closeCursor();
 
@@ -64,10 +54,9 @@ function deleteMovie($mid){
 
 function updateMovie($attr, $val, $mid){
     global $db;
-    $query = "UPDATE movies SET :attr = :val WHERE movie_id = :mid";
+    $val = $db->quote($val);
+    $query = "UPDATE movies SET $attr = $val WHERE movie_id = :mid;";
     $statement = $db->prepare($query);
-    $statement->bindValue(':attr', $attr);
-    $statement->bindValue(':val', $val);
     $statement->bindValue(':mid', $mid);
 
     $statement->execute();
@@ -78,9 +67,9 @@ function updateMovie($attr, $val, $mid){
 
 function updateMovieGenre($val, $mid){
     global $db;
-    $query = "UPDATE movies SET genre = :val WHERE movie_id = :mid";
+    $query = "UPDATE genres SET genre = \"$val\" WHERE movie_id = :mid";
     $statement = $db->prepare($query);
-    $statement->bindValue(':val', $val);
+    //$statement->bindValue(':val', $val);
     $statement->bindValue(':mid', $mid);
 
     $statement->execute();
@@ -90,9 +79,9 @@ function updateMovieGenre($val, $mid){
 
 function updateMovieLeadActor($val, $mid){
     global $db;
-    $query = "UPDATE lead_actors SET lead_actor = :val WHERE movie_id = :mid;";
+    $query = "UPDATE lead_actors SET lead_actor = \"$val\" WHERE movie_id = :mid;";
     $statement = $db->prepare($query);
-    $statement->bindValue(':val', $val);
+    //$statement->bindValue(':val', $val);
     $statement->bindValue(':mid', $mid);
 
     $statement->execute();
@@ -105,10 +94,11 @@ function addMovieShowing($mid, $tid, $time, $room){
 
     global $db;
 
-    $sidquery = "select max(showing_id) from showing_info"; //do this to get next ID
+    $sidquery = "select max(showing_id) as showing_id from showing_info"; //do this to get next ID
     $sidstatement = $db->prepare($sidquery);
     $sidstatement->execute();
-    $sid = $sidstatement->fetchAll() + 1;
+    $sid = $sidstatement->fetch();
+    $sid = $sid['showing_id'] + 1;
     $sidstatement->closeCursor();
     
 
@@ -158,10 +148,11 @@ function updateMovieShowing($attr, $val, $sid){
 function addTheater($city, $street, $state, $company, $zip){
     global $db;
 
-    $tidquery = "select max(theater_id) from theaters"; //do this to get next ID
+    $tidquery = "select max(theater_id) as theater_id from theaters"; //do this to get next ID
     $tidstatement = $db->prepare($tidquery);
     $tidstatement->execute();
-    $tid = $tidstatement->fetchAll() + 1;
+    $tid = $tidstatement->fetch();
+    $tid = $tid['theater_id'] + 1;
     $tidstatement->closeCursor();
 
 
@@ -302,9 +293,22 @@ function createAdmin($username, $first, $last, $pass, $email, $phone){
 function deleteUser($username){
     global $db;
 
-    $query = "DELETE FROM account WHERE username = :username ON DELETE CASCADE;";
+    $query = "DELETE FROM account WHERE username = :username ;";
     $statement = $db->prepare($query);
     $statement->bindValue(':username', $username);
+    $statement->execute();
+
+    $statement->closeCursor();
+}
+function deleteTheater($tid){
+    global $db;
+
+    $query = "DELETE FROM theater_to_movie WHERE theater_id = :tid;
+            DELETE FROM theater_company WHERE theater_id = :tid;
+            DELETE FROM showing_info WHERE theater_id = :tid;
+            DELETE FROM theaters WHERE theater_id = :tid;";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':tid', $tid);
     $statement->execute();
 
     $statement->closeCursor();

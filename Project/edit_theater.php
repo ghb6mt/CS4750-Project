@@ -6,6 +6,13 @@ $theater_id = $_POST['theater_id']; // Assuming theater_id is passed as a query 
 $theater = getTheater($theater_id)[0]; // Assuming such a function exists
 
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+    if(!empty($_POST['update_theater'])){
+       
+    }
+}
+
+
 // Check if theater data is returned
 if ($theater) {
     $company = getTheaterCompany($theater['theater_id'])[0]['company'];
@@ -44,7 +51,7 @@ if ($theater) {
 
         <!-- Add other form fields if needed -->
 
-        <input type="submit" value="Submit">
+        <input type="submit" name= "update_theater" value="Submit">
     </form>
 </body>
 </html>

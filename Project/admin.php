@@ -5,9 +5,42 @@ session_start();
 require("connect-db.php");
 require("utils.php");
 
+//add if here to call right thing from utils
+
 $movielist = allMovies();
 $theaterlist = getAllTheaters();
+$snackList = getAllSnacks();
 $theater_ids = array();
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+    if(!empty($_POST['add_theater'])){
+       addTheater($_POST['city'],$_POST['street'],$_POST['state'],$_POST['company'],$_POST['zip']);
+    }
+    elseif(!empty($_POST['add_movie'])) {
+        // Retrieve form data
+        $mytitle = $_POST['title'];
+        $myruntime = $_POST['runtime'];
+        $myyear = $_POST['year'];
+        $mydesc = $_POST['desc'];
+        $myage = $_POST['age'];
+        $mygenre = $_POST['genre'];
+        $mylead = $_POST['lead'];
+
+        // Call the function from utils.php to add movie
+    
+        addMovie($mytitle, $myruntime, $myyear, $mydesc, $myage, $mygenre, $mylead);    
+    }
+    elseif(!empty($_POST['delete_theater'])) {
+        deleteTheater($_POST['theater_id']);    
+    }
+
+    $movielist = allMovies();
+    $theaterlist = getAllTheaters();
+    $snackList = getAllSnacks();
+    $theater_ids = array();
+  }
+
+
 ?>
 
 <head>
@@ -19,7 +52,7 @@ $theater_ids = array();
     <!-- Form to Add Movies -->
     <div class='card-body'>
     <h3 class="card-title">Add Movie</h2>
-    <form method="post" action="addmovie.php">
+    <form method="post" action="admin.php">
         Title: <input type="text" name="title"><br>
         Runtime: <input type="text" name="runtime"><br>
         Year: <input type="text" name="year"><br>
@@ -37,6 +70,16 @@ $theater_ids = array();
         Time: <input type="text" name="year"><br>
         Room: <textarea name="desc"></textarea><br>
         <input type="submit" name="add_showing" value="Add Showing">
+    </form>
+
+    <h2>Add Theater</h2>
+    <form method="post" action="admin.php">
+        City <input type="text" name="city"><br>
+        Street: <input type="text" name="street"><br>
+        State: <input type="text" name="state"><br>
+        Company: <input type="text" name="company"><br>
+        Zip Code: <input type="text" name="zip"><br>
+        <input type="submit" name="add_theater" value="Add Theater">
     </form>
 
 
@@ -103,13 +146,9 @@ $theater_ids = array();
                 <td><?php echo $theater['state']; ?></td>
                 <td><?php echo $theater['theater_id']; ?></td>
                 <td>
-                    <form action="edit_theater.php" method="post" style="display: inline;">
+                    <form action="admin.php" method="post" style="display: inline;">
                         <input type="hidden" name="theater_id" value="<?php echo $theater['theater_id']; ?>">
-                        <button type="submit" name="action" value="edit_theater" class="btn btn-warning">Edit</button>
-                    </form>
-                    <form action="delete_theater.php" method="post" style="display: inline;">
-                        <input type="hidden" name="theater_id" value="<?php echo $theater['theater_id']; ?>">
-                        <button type="submit" name="action" value="delete_theater" class="btn btn-danger">Delete</button>
+                        <button type="submit" name="delete_theater" value="delete_theater" class="btn btn-danger">Delete</button>
                     </form>
                 </td>
             </tr>
@@ -134,7 +173,6 @@ $theater_ids = array();
             </tr>
         </thead>
         <?php 
-        require('utils.php'); // Replace with the correct path to your utils.php or equivalent
         $showingList = getAllShowings(); // Fetch all showings
         foreach ($showingList as $showing): 
         ?>
