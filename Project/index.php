@@ -6,6 +6,7 @@ require("connect-db.php");
 require("utils.php");
 
 $movielist = allMovies();
+include('navbar.html')
 ?>
 
 <h3>List of Movies</h3>
@@ -35,6 +36,6 @@ $movielist = allMovies();
 </div>
 
 <form method="POST" action="movie.php">
-    <pre>Insert Movie ID: <input type="number" name="id"> </pre>
-    <input type="submit" value="Go to Movie Page">
-</form>
+            <input type="number" name="id" value="<?php echo $move['movie_id'] ?>">
+            <input type="submit" value="Go to Movie Page">
+        </form>
