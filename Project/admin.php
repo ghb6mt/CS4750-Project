@@ -174,8 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         </thead>
         <?php 
         $showingList = getAllShowings(); // Fetch all showings
-        foreach ($showingList as $showing): 
-        ?>
+        foreach ($showingList as $showing): ?>
             <tr>
                 <?php 
                 $movie = getMovieInfo($showing['movie_id']); 

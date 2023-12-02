@@ -644,5 +644,33 @@ function getAllSnacks(){
     $statement->closeCursor();
 
     return $snacks;
-    
+}
+
+function getSpecificMovieShowings($movieID) {
+    global $db;
+
+    $query = "SELECT * FROM showing_info WHERE movie_id = :movieID AND time > CURRENT_TIMESTAMP";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':movieID', $movieID);
+
+    $statement->execute();
+    $showings = $statement->fetchAll();
+    $statement->closeCursor();
+
+    return $showings;
+}
+
+function getZipCode($city, $street, $state) {
+    global $db;
+
+    $query = "SELECT zip_code FROM zip_codes WHERE city = :city AND street = :street AND state = :state";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':city', $city);
+    $statement->bindValue(':street', $street);
+    $statement->bindValue(':state', $state);
+    $statement->execute();
+    $zc = $statement->fetchAll();
+    $statement->closeCursor();
+
+    return $zc;
 }
