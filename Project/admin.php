@@ -7,6 +7,7 @@ require("utils.php");
 
 $movielist = allMovies();
 $theaterlist = getAllTheaters();
+$theater_ids = array();
 ?>
 
 <head>
@@ -95,7 +96,7 @@ $theaterlist = getAllTheaters();
         </thead>
         <?php foreach ($theaterlist as $theater): ?>
             <tr>
-                <?php $company = getTheaterCompany($theater['theater_id']); ?>
+                <?php $company = getTheaterCompany($theater['theater_id']); array_push($theater_ids,$theater['theater_id']); ?>
                 <td><?php echo $company[0]['company']?></td>
                 <td><?php echo $theater['city']; ?></td>
                 <td><?php echo $theater['street']; ?></td>
@@ -132,14 +133,20 @@ $theaterlist = getAllTheaters();
                 <th width="30%">Actions</th>
             </tr>
         </thead>
-        <?php foreach ($showingList as $showing): ?>
+        <?php 
+        require('utils.php'); // Replace with the correct path to your utils.php or equivalent
+        $showingList = getAllShowings(); // Fetch all showings
+        foreach ($showingList as $showing): 
+        ?>
             <tr>
-                <?php $movie = getMovieInfo($showing['movie_id']); ?>
-                <?php $theaterComp = getTheaterCompany($showing['theater_id']); ?>
-                <?php $theater = getTheater($showing['theater_id']); ?>
+                <?php 
+                $movie = getMovieInfo($showing['movie_id']); 
+                $theaterComp = getTheaterCompany($showing['theater_id']); 
+                $theater = getTheater($showing['theater_id']); 
+                ?>
                 <td><?php echo $movie[0]['title'];?></td>
                 <td><?php echo $theaterComp[0]['company']; ?></td>
-                <td><?php echo $theater[0]['city'] ?></td>
+                <td><?php echo $theater[0]['city']; ?></td>
                 <td><?php echo $theater[0]['street']; ?></td>
                 <td><?php echo $theater[0]['state']; ?></td>
                 <td><?php echo $showing['time']; ?></td>
@@ -158,6 +165,7 @@ $theaterlist = getAllTheaters();
         <?php endforeach; ?>
     </table>
 </div>
+
 
 
 
