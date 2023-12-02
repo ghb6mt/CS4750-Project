@@ -33,3 +33,8 @@ $movielist = allMovies();
     <?php endforeach; ?>
     </table>
 </div>
+
+<form method="POST" action="movie.php">
+    <pre>Insert Movie ID: <input type="number" name="id"> </pre>
+    <input type="submit" value="Go to Movie Page">
+</form>

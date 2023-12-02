@@ -134,10 +134,8 @@ $theater_ids = array();
             </tr>
         </thead>
         <?php 
-        require('utils.php'); // Replace with the correct path to your utils.php or equivalent
         $showingList = getAllShowings(); // Fetch all showings
-        foreach ($showingList as $showing): 
-        ?>
+        foreach ($showingList as $showing): ?>
             <tr>
                 <?php 
                 $movie = getMovieInfo($showing['movie_id']); 
