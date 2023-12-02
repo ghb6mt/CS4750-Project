@@ -16,7 +16,8 @@ $theaterlist = getAllTheaters();
     <h1>Admin Dashboard</h1>
 
     <!-- Form to Add Movies -->
-    <h2>Add Movie</h2>
+    <div class='card-body'>
+    <h3 class="card-title">Add Movie</h2>
     <form method="post" action="addmovie.php">
         Title: <input type="text" name="title"><br>
         Runtime: <input type="text" name="runtime"><br>
@@ -27,6 +28,7 @@ $theaterlist = getAllTheaters();
         Lead Actor: <input type="text" name="lead"><br>
         <input type="submit" name="add_movie" value="Add Movie">
     </form>
+</div>
     <h2>Add Showing</h2>
     <form method="post" action="addshowing.php">
         Movie ID: <input type="text" name="movie_id"><br>
@@ -39,30 +41,43 @@ $theaterlist = getAllTheaters();
 
     <h3>List of Movies</h3>
 <div class="row justify-content center">
-    <table class="w3-table w3-bordered w3-card-4 center" style="width:70%">
-    <thead>
-        <tr style="background-color:#B0B0B0">
-            <th width="30%">Movie Title
-            <th width="30%">Movie ID   
-            <th width="30%">Lead Actor
-            <th width="30%">Age Rating
-            <th width="30%">Genre
-            <th width="30%">Runtime
-        </tr>
-    </thead>
-    <?php foreach ($movielist as $movie): ?>
-        <tr>
-            <td><?php echo $movie['title']; ?></td>
-            <td><?php echo $movie['movie_id']; ?></td>
-            <?php $leadActor = getMovieLeadActor($movie['movie_id']); ?>
-            <td><?php echo $leadActor[0][0] ?></td>
-            <td><?php echo $movie['age_rating']; ?></td>
-            <?php $genres = getMovieGenre($movie['movie_id']); ?>
-            <td><?php echo $genres[0][0] ?></td>
-            <td><?php echo $movie['runtime']; ?></td>
+<table class="w3-table w3-bordered w3-card-4 center" style="width:70%">
+<thead>
+    <tr style="background-color:#B0B0B0">
+        <th width="30%">Movie Title</th>
+        <th width="30%">Movie ID</th>   
+        <th width="30%">Lead Actor</th>
+        <th width="30%">Age Rating</th>
+        <th width="30%">Genre</th>
+        <th width="30%">Runtime</th>
+        <th width="30%">Actions</th>
     </tr>
-    <?php endforeach; ?>
-    </table>
+</thead>
+<?php foreach ($movielist as $movie): ?>
+    <tr>
+        <td><?php echo $movie['title']; ?></td>
+        <td><?php echo $movie['movie_id']; ?></td>
+        <?php $leadActor = getMovieLeadActor($movie['movie_id']); ?>
+        <td><?php echo $leadActor[0][0]; ?></td>
+        <td><?php echo $movie['age_rating']; ?></td>
+        <?php $genres = getMovieGenre($movie['movie_id']); ?>
+        <td><?php echo $genres[0][0]; ?></td>
+        <td><?php echo $movie['runtime']; ?></td>
+        <td>
+            <form action="edit_movie.php" method="post" style="display: inline;">
+                <input type="hidden" name="movieToEdit" value="<?php echo $movie['movie_id']; ?>">
+                <input type="submit" value="Edit" name="editBtn">
+            </form>
+            <form action="delete_movie.php" method="post" style="display: inline;">
+                <input type="hidden" name="movieToDelete" value="<?php echo $movie['movie_id']; ?>">
+                <input type="submit" value="Delete" name="deleteBtn" onclick="return confirm('Are you sure you want to delete this movie?');">
+            </form>
+        </td>
+    </tr>
+<?php endforeach; ?>
+</table>
+
+
 
     <h3>List of Theaters</h3>
 <div class="row justify-content center">

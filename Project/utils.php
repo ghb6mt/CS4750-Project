@@ -1,17 +1,21 @@
+
+<link href="NiceAdmin/assets/css/style.css" rel="stylesheet">
 <?php
+
+require("connect-db.php");
 
 function addMovie($title, $runtime, $year, $desc, $age, $genre, $lead){
     global $db;
 
 
-    $midquery = "select max(movie_id) from movies"; //do this to get next ID
+    $midquery = "SELECT MAX(movie_id) FROM movies"; //do this to get next ID
     $midstatement = $db->prepare($midquery);
     $midstatement->execute();
-    $mid = $midstatement->fetchAll() + 1;
+    $mid = $midstatement->fetchAll()[0][0] + 1;
     $midstatement->closeCursor();
 
 
-    $query = "INSERT INTO movies VALUES (:mid, :title, :runtime, :year, :desc, :age');
+    $query = "INSERT INTO movies VALUES (:mid, :title, :runtime, :year, :desc, :age);
     INSERT INTO genres VALUES (':mid', :genre);
     INSERT INTO lead_actors VALUES (':mid', :lead);
     ";
@@ -27,6 +31,18 @@ $statement->bindValue(':lead', $lead);
 $statement->bindValue(':mid', $mid);
 
 $statement->execute();
+
+if($statement){
+    echo"<div class=\"alert alert-success alert-dismissible fade show\" role=\"alert\">
+                Movie was added!
+                <button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" aria-label=\"Close\"></button>
+              </div>";
+}else{
+    echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                Movie couldn\'t be added!
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>';
+}
 
 $statement->closeCursor();
 
