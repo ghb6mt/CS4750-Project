@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 elseif(isset($_GET['movie_id'])){
     $movie_id = $_GET['movie_id'];
 }
-include('navbar.html')
+include('navbar.php')
 ?>
 
 <head>
