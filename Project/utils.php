@@ -306,13 +306,16 @@ function createAdmin($username, $first, $last, $pass, $email, $phone){
 
 function deleteUser($username){
     global $db;
-
-    $query = "DELETE FROM account WHERE username = :username ;";
+    $user = "'".$username."'";
+    $query = "DELETE FROM `phone_numbers` WHERE username = $user;
+    DELETE FROM `email_addresses` WHERE username = $user;
+    DELETE FROM `account` WHERE username = $user;";
     $statement = $db->prepare($query);
-    $statement->bindValue(':username', $username);
+   // $statement->bindValue(':username', $user);
     $statement->execute();
 
     $statement->closeCursor();
+    
 }
 function deleteTheater($tid){
     global $db;
@@ -790,4 +793,16 @@ function swapUserRole($username, $admin){
     $statement->execute();
 
     $statement->closeCursor(); //do this to close connection to DB, save resources
+}
+
+function getAllUsernames(){
+    global $db;
+
+    $query = "SELECT username FROM account";
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $users = $statement->fetchAll();
+    $statement->closeCursor();
+
+    return $users;
 }

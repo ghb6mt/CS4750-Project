@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         deleteSnack($_POST['snack_id'], $_POST['name'], $_POST['price'], $_POST['brand']);
     }
     elseif(!empty($_POST['delete_user'])){
-        deleteUser($_POST['username']);
+       deleteUser($_POST['username']);
     }
     elseif(!empty($_POST['edit_user_role'])){
         swapUserRole($_POST['username'], $_POST['role']);
