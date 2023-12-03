@@ -830,3 +830,14 @@ function getRatingsForMovie($mid) {
 
     return $ratings;
 }
+
+function getUserFavorites($username) {
+    global $db;
+    $query = "SELECT movie_id FROM favorites where username = '$username'";
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $ratings = $statement->fetchAll();
+    $statement->closeCursor();
+
+    return $ratings;
+}

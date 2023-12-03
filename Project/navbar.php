@@ -43,7 +43,7 @@ li a:hover {
 <ul>
   <li><img src="cinemavision.png" width = "125" height = "63" alt="CinemaVision Logo"></li>
   <li><a class="active" href="index.php">MOVIES</a></li>
-  <li><a href="#recommended">RECOMMENDED FOR YOU</a></li>
+  <li><a href="recommended.php">RECOMMENDED FOR YOU</a></li>
   <?php if($_SESSION['is_admin'] == 1){
     ?> 
     <li><a href="admin.php">ADMIN PAGE</a></li>
