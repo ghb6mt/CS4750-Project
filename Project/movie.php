@@ -6,6 +6,8 @@ require("connect-db.php");
 require("utils.php");
 
 $movie_id = $_POST['id'];
+
+include('navbar.html')
 ?>
 
 <head>
