@@ -4,6 +4,9 @@ session_start();
 
 require("connect-db.php");
 require("utils.php");
+if(!isset($_SESSION['username'])){
+    header("Location: login.html");
+}
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     $movie_id = $_POST['id'];
     if(!empty($_POST['rate_movie'])){
