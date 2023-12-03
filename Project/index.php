@@ -12,17 +12,24 @@ include('navbar.html')
 <?php
     if(isset($_POST['search'])) {
         $searchq = $_POST['search'];
-        $query = "SELECT * FROM movies NATURAL JOIN genres NATURAL JOIN lead_actors WHERE title LIKE '%$searchq%'";
+        $filterby = $_POST['filter'];
+        $query = "SELECT * FROM movies NATURAL JOIN genres NATURAL JOIN lead_actors WHERE $filterby LIKE '%$searchq%'";
         $statement = $db->prepare($query);
         $statement->execute();
         $filtered = $statement->fetchAll();
         $statement->closeCursor();
-        echo $filtered;
     }
 ?>
 
 <form method="POST" action="index.php">
     <input type="text" name="search" placeholder="Search by movie title">
+    <select name="filter" id="filter">
+        <option value="title">Movie Title</option>
+        <option value="lead_actor">Lead Actor</option>
+        <option value="age">Age Rating</option>
+        <option value="genre">Genre</option>
+        <option value="runtime">Runtime</option>
+    </select>
     <input type="submit" value="Search">
 </form>
 
