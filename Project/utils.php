@@ -513,10 +513,10 @@ function getAverageRatingForMovie($movieId){
 
     $statement->execute();
 
-    $result = $db->query("SELECT @avg_rating AS average_rating")->fetch(PDO::FETCH_ASSOC);
+    $result = $statement->fetch();
     $statement->closeCursor();
 
-    return $result['average_rating'];
+    return $result;
 }
 
 function login($username, $password){

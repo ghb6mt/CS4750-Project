@@ -75,6 +75,8 @@ include('navbar.html')
 
         <input type="submit" name="rate_movie" value="Submit">
     </form>
-   <?php } ?>
+   <?php }
+   
+echo getAverageRatingForMovie($movie_id)[0];?>
     </div>
 </body>
