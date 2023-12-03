@@ -728,14 +728,16 @@ function updateSnackInfo($attr, $val, $name){
     return $snack;
 }
 
-function deleteSnack($sid, $name){
+function deleteSnack($sid, $name, $price, $brand){
 
     global $db;
 
-    $query = "DELETE FROM snack_info WHERE name = :name;
+    $query = "DELETE FROM snack_info WHERE name = :name and price = :price and brand = :brand;
     DELETE FROM snacks WHERE snack_id = :sid;";
     $statement = $db->prepare($query);
     $statement->bindValue(':name', $name);
+    $statement->bindValue(':price', $price);
+    $statement->bindValue(':brand', $brand);
     $statement->bindValue(':sid', $sid);
     $statement->execute();
     $statement->closeCursor();
