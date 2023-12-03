@@ -236,11 +236,11 @@ function rateMovie($username, $mid, $stars, $review){
 
 function favoriteMovie($username, $mid){
     global $db;
-
-    $query = "INSERT INTO favorites VALUES (:username, :mid);";
+    $username = "'". $username . "'";
+    $query = "INSERT INTO favorites VALUES ($username, :mid);";
     $statement = $db->prepare($query);
     $statement->bindValue(':mid', $mid);
-    $statement->bindValue(':username', $username);
+    //$statement->bindValue(':username', $username);
     
     $statement->execute();
 

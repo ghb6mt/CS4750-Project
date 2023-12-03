@@ -14,6 +14,12 @@ include('navbar.php');
         header("Location: login.html");
     }
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+        if(!empty($_POST['favorite_movie'])){
+        favoriteMovie($_POST['username'],$_POST['movie_id']);
+        header("Location: index.php");
+        }
+    }
+    if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         $query = "";
         if(isset($_POST['title'])) {
             $title = $_POST['title'];
@@ -70,7 +76,8 @@ include('navbar.php');
         $statement->execute();
         $filtered = $statement->fetchAll();
         $statement->closeCursor();
-    } else {
+    } 
+    else {
         $filtered = allMovies();
     }
 ?>
@@ -110,6 +117,7 @@ include('navbar.php');
             <th width="30%">Genre
             <th width="30%">Runtime
             <th width="30%">Rating
+            <th width="30%">Favorite
         </tr>
     </thead>
     <?php foreach ($filtered as $movie): ?>
@@ -131,6 +139,19 @@ include('navbar.php');
                 }
                  
             ?></td>
+            <td>
+                <?php $favorites = getUserFavorites($_SESSION['username']);
+                $favorites = array_column($favorites,'movie_id');
+                if(!in_array($movie['movie_id'],$favorites)){?>
+                <form action="index.php" method="post" style="display: inline;">
+                        <input type="hidden" name="username" value="<?php echo $_SESSION['username']; ?>">
+                        <input type="hidden" name="movie_id" value="<?php echo $movie['movie_id']; ?>">
+                        <button type="submit" name="favorite_movie" value="favorite_movie" class="btn btn-warning">Favorite</button>
+                    </form>
+            <?php }
+            else{
+                echo "Already Favorited!";}?>
+            </td>
     </tr>
     <?php endforeach; ?>
     </table>
