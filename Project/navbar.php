@@ -26,7 +26,7 @@ li a {
   display: block;
   color: white;
   text-align: center;
-  padding: 10px 120px;
+  padding: 10px 70px;
   font-size: 20px;
   font-family: sans-serif;
   text-decoration: none;
@@ -44,12 +44,12 @@ li a:hover {
   <li><img src="cinemavision.png" width = "125" height = "63" alt="CinemaVision Logo"></li>
   <li><a class="active" href="index.php">MOVIES</a></li>
   <li><a href="recommended.php">RECOMMENDED FOR YOU</a></li>
+  <li><a href="logout.php">LOGOUT</a></li>
   <?php if($_SESSION['is_admin'] == 1){
     ?> 
     <li><a href="admin.php">ADMIN PAGE</a></li>
  <?php } ?>
   <li><a href="profile.php"><img src="profile.png" width = "50" height = "50" alt="Profile"></a></li>
-  <li><a href="logout.php">LOGOUT</a></li>
 </ul>
 
 </body>
