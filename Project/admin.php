@@ -43,6 +43,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     elseif(!empty($_POST['delete_showing'])){
         deleteMovieShowing($_POST['showing_id']);
     }
+    elseif(!empty($_POST['add_snack'])){
+        addSnack($_POST['movie_id'],$_POST['name'],$_POST['price'],$_POST['brand'],$_POST['type'],$_POST['calories']);
+    }
+    elseif(!empty($_POST['delete_snack'])){
+        deleteSnack($_POST['snack_id'], $_POST['name']);
+    }
 
     $movielist = allMovies();
     $theaterlist = getAllTheaters();
@@ -90,6 +96,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         Company: <input type="text" name="company"><br>
         Zip Code: <input type="text" name="zip"><br>
         <input type="submit" name="add_theater" value="Add Theater">
+    </form>
+
+    <h2>Add Snack</h2>
+    <form method="post" action="admin.php">
+        Name: <input type="text" name="name"><br>
+        Price: <input type="text" name="price"><br>
+        Brand: <input type="text" name="brand"><br>
+        Type: <input type="text" name="type"><br>
+        Calories: <input type="text" name="calories"><br>
+        Movie ID: <input type="text" name="movie_id"><br>
+        <input type="submit" name="add_snack" value="Add Snack">
     </form>
 
 
@@ -244,9 +261,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
                         <input type="hidden" name="snack_id" value="<?php echo $snack['snack_id']; ?>">
                         <button type="submit" name="action" value="edit_snack" class="btn btn-warning">Edit</button>
                     </form>
-                    <form action="delete_snack.php" method="post" style="display: inline;">
+                    <form action="admin.php" method="post" style="display: inline;">
                         <input type="hidden" name="snack_id" value="<?php echo $snack['snack_id']; ?>">
-                        <button type="submit" name="action" value="delete_snack" class="btn btn-danger">Delete</button>
+                        <input type="hidden" name="name" value="<?php echo $snack['name']; ?>">
+                        <button type="submit" name="delete_snack" value="delete_snack" class="btn btn-danger">Delete</button>
                     </form>
                 </td>
             </tr>

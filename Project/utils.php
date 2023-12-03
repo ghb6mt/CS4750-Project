@@ -189,6 +189,7 @@ function addTheater($city, $street, $state, $company, $zip){
 function addSnack($mid, $name, $price, $brand, $type, $cals){
     global $db;
 
+
     $query = "INSERT INTO snacks VALUES (NULL, :mid, :name, :price, :brand);
     INSERT INTO snack_info VALUES (:name, :price, :brand, :type, :cals);";
     $statement = $db->prepare($query);
@@ -699,4 +700,44 @@ function getSingleShowing($sid) {
     $statement->closeCursor();
 
     return $showing;
+}
+
+function getSnack($sid){
+    global $db;
+
+    $query = "SELECT * FROM snacks Natural Join snack_info where snack_id = :sid";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':sid', $sid);
+    $statement->execute();
+    $snack = $statement->fetchAll();
+    $statement->closeCursor();
+
+    return $snack;
+}
+
+function updateSnackInfo($attr, $val, $name){
+    global $db;
+
+    $query = "UPDATE snacks_info SET $attr = \'$val\' WHERE name = :name;";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':name', $name);
+    $statement->execute();
+    $snack = $statement->fetchAll();
+    $statement->closeCursor();
+
+    return $snack;
+}
+
+function deleteSnack($sid, $name){
+
+    global $db;
+
+    $query = "DELETE FROM snack_info WHERE name = :name;
+    DELETE FROM snacks WHERE snack_id = :sid;";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':name', $name);
+    $statement->bindValue(':sid', $sid);
+    $statement->execute();
+    $statement->closeCursor();
+    
 }
