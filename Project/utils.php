@@ -334,9 +334,10 @@ function deleteTheater($tid){
 function getUserInfo($username){
     global $db;
 
-    $query = "SELECT * FROM account WHERE username = “:username”;";
+    $username = "'". $username . "'";
+
+    $query = "SELECT * FROM account Natural Join phone_numbers Natural Join email_addresses WHERE username = $username;";
     $statement = $db->prepare($query);
-    $statement->bindValue(':username', $username);
     $statement->execute();
 
     $userinfo = $statement->fetchAll();
