@@ -9,6 +9,8 @@ if($_SESSION['is_admin'] == 0){
 require("connect-db.php");
 require("utils.php");
 
+include('navbaradmin.html');
+
 //add if here to call right thing from utils
 
 $movielist = allMovies();

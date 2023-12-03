@@ -507,14 +507,16 @@ function searchByRuntime($runtime){
 function getAverageRatingForMovie($movieId){
     global $db;
 
-    $query = "SET @p0=':mid'; SET @p1=':mid'; CALL `calc_avg_rating`(@p0, @p1); SELECT @p1 AS `avgRating`;";
-    $statement->bindValue(':mid', $movieId);
+    $query = "CALL calc_avg_rating(:movieId, @avg_rating)";
     $statement = $db->prepare($query);
+    $statement->bindValue(':movieId', $movieId);
+
     $statement->execute();
-    $movies = $statement->fetchAll();
+
+    $result = $statement->fetch();
     $statement->closeCursor();
 
-    return $movies;
+    return $result;
 }
 
 function login($username, $password){
