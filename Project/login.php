@@ -29,10 +29,12 @@ if(isset($_POST['uname']) && isset($_POST['password'])){
             $_SESSION['username'] = $uname;
             $_SESSION['is_admin'] = getUserAdmin($uname);
             if($_SESSION['is_admin']){
+                $_SESSION['db_uname'] = 'dnj6xk_b';
                 header('Location: admin.php');
                 exit;
             }
             else{
+                $_SESSION['db_uname'] = 'dnj6xk_c';
                 header('Location: index.php');
                 exit;
             }
