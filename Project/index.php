@@ -9,6 +9,23 @@ $movielist = allMovies();
 include('navbar.html')
 ?>
 
+<?php
+    if(isset($_POST['search'])) {
+        $searchq = $_POST['search'];
+        $query = mysql_query("SELECT * FROM movies NATURAL JOIN genres NATURAL JOIN lead_actors WHERE title LIKE '%$searchq%'");
+        $statement = $db->prepare($query);
+        $statement->execute();
+        $showings = $statement->fetchAll();
+        $statement->closeCursor();
+        echo $showings;
+    }
+?>
+
+<form method="POST" action="index.php">
+    <input type="text" name="search" placeholder="Search by movie title">
+    <input type="submit" value="Search">
+</form>
+
 <h3>List of Movies</h3>
 <div class="row justify-content center">
     <table class="w3-table w3-bordered w3-card-4 center" style="width:70%">
@@ -36,6 +53,6 @@ include('navbar.html')
 </div>
 
 <form method="POST" action="movie.php">
-            <input type="number" name="id" value="<?php echo $move['movie_id'] ?>">
+            <input type="number" placeholder="movie id here" name="id">
             <input type="submit" value="Go to Movie Page">
         </form>
