@@ -35,6 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         <input type="text" name="phone_number" placeholder="Phone Number" required><br>
         <button type="submit">Create Account</button>
     </form>
-    <a href="login.php">Back To Login</a>
+    <a href="login.html">Back To Login</a>
 </body>
 </html>

@@ -38,11 +38,11 @@ if(isset($_POST['uname']) && isset($_POST['password'])){
             }
         // MORE THAN ONE USER FOUND
         case -1:
-            header('Location: http://www.geico.com/');
+           echo "<script> alert(\"More than one user found! Contact admin for help.\"); window.location.href=\"login.html\"; </script>";
             exit;
         // UNAME OR PASSWORD INCORRECT
         case -2:
-            header('Location: http://www.geico.com/');
+            echo "<script> alert(\"Username or Password Incorrect\"); window.location.href=\"login.html\"; </script>";
             exit;
      }
 
