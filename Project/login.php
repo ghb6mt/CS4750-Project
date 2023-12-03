@@ -26,12 +26,14 @@ if(isset($_POST['uname']) && isset($_POST['password'])){
      switch(login($uname, $password)){
         // LOGIN SUCCESSFUL
         case 1:
+            $_SESSION['username'] = $uname;
+            $_SESSION['is_admin'] = getUserAdmin($uname);
             if($_SESSION['is_admin']){
-                header('Location: localhost/admin.html');
+                header('Location: admin.php');
                 exit;
             }
             else{
-                header('localhost/index.html');
+                header('Location: index.php');
                 exit;
             }
         // MORE THAN ONE USER FOUND

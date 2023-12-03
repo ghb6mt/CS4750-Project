@@ -756,3 +756,18 @@ function getAllUsers($username){
 
     return $users;
 }
+
+
+function getUserAdmin($uname){
+    global $db;
+
+    $query = "SELECT is_admin FROM account where username = :username ";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':username', $uname);
+    $statement->execute();
+    $user = $statement->fetch();
+    $user = $user['is_admin'];
+    $statement->closeCursor();
+
+    return $user;
+}
