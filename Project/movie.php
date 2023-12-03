@@ -31,6 +31,33 @@ include('navbar.php')
     <p>Rating: <?php echo $movie_info[0]['age_rating'] ?></p>
     <p>Runtime: <?php echo $movie_info[0]['runtime'] ?> minutes</p>
     <p>Year: <?php echo $movie_info[0]['year'] ?></p>
+    <p>Rating: <?php 
+                if (is_numeric($avg_rating[0])) {
+                    echo $avg_rating[0];
+                } else {
+                    echo "Not Rated";
+                } ?></p>
+    <p> Exclusive Movie Snack: </p>
+    <?php $snack = getSnacksForMovie($movie_id); ?>
+    <div class="row justify-content center">
+    <table class="w3-table w3-bordered w3-card-4 center" style="width:70%">
+    <thead>
+        <tr style="background-color:#B0B0B0">
+            <th width="30%">Name
+            <th width="30%">Price
+            <th width="30%">Brand
+            <th width="30%">Type
+            <th width="30%">Calories
+        </tr>
+    </thead>
+        <tr>
+            <td><?php echo $snack[0]['name']; ?></td>
+            <td><?php echo $snack[0]['price']; ?></td>
+            <td><?php echo $snack[0]['brand']; ?></td>
+            <td><?php echo $snack[0]['type']; ?></td>
+            <td><?php echo $snack[0]['calories']; ?></td>
+    </tr>
+    </table>
     <p>Next Showings: </p>
     <?php $showtimes = getSpecificMovieShowings($movie_id); ?>
     <div class="row justify-content center">
@@ -75,8 +102,24 @@ include('navbar.php')
 
         <input type="submit" name="rate_movie" value="Submit">
     </form>
-   <?php }
-   
-echo getAverageRatingForMovie($movie_id)[0];?>
+   <?php } ?>
     </div>
+
+    <p>Ratings: </p>
+    <?php $movie_ratings = getRatingsForMovie($movie_id); ?>
+    <div class="row justify-content center">
+    <table class="w3-table w3-bordered w3-card-4 center" style="width:70%">
+    <thead>
+        <tr style="background-color:#B0B0B0">
+            <th width="30%">Number of Stars
+            <th width="30%">Comment
+        </tr>
+    </thead>
+    <?php foreach ($movie_ratings as $rate): ?>
+        <tr>
+            <td><?php echo $rate['number_of_stars']; ?></td>
+            <td><?php echo $rate['comment']; ?></td>
+    </tr>
+    <?php endforeach; ?>
+    </table>
 </body>

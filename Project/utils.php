@@ -209,7 +209,7 @@ function addSnack($mid, $name, $price, $brand, $type, $cals){
 function getSnacksForMovie($mid){
     global $db;
 
-    $query = "SELECT * from snacks where movie_id = :mid";
+    $query = "SELECT * from snacks NATURAL JOIN snack_info where movie_id = :mid";
     $statement = $db->prepare($query);
     $statement->bindValue(':mid', $mid);
 
@@ -812,6 +812,17 @@ function hasUserRated($username, $mid){
     global $db;
     $username = "'". $username . "'";
     $query = "SELECT username, movie_id FROM rating where username = $username and movie_id = $mid";
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $ratings = $statement->fetchAll();
+    $statement->closeCursor();
+
+    return $ratings;
+}
+
+function getRatingsForMovie($mid) {
+    global $db;
+    $query = "SELECT number_of_stars, comment FROM rating where movie_id = $mid";
     $statement = $db->prepare($query);
     $statement->execute();
     $ratings = $statement->fetchAll();
