@@ -771,3 +771,23 @@ function getUserAdmin($uname){
 
     return $user;
 }
+
+
+function swapUserRole($username, $admin){
+    global $db;
+    if($admin == 0){
+        $newrole = 1;
+    }
+    else{
+        $newrole = 0;
+    }
+
+    $query = "UPDATE account SET is_admin = :admin where username = :username;";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':admin', $newrole);
+    $statement->bindValue(':username', $username);
+
+    $statement->execute();
+
+    $statement->closeCursor(); //do this to close connection to DB, save resources
+}

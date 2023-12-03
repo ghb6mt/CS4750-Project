@@ -15,6 +15,7 @@ $movielist = allMovies();
 $theaterlist = getAllTheaters();
 $snackList = getAllSnacks();
 $theater_ids = array();
+$userList = getAllUsers($_SESSION['username']);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     if(!empty($_POST['add_theater'])){
@@ -53,12 +54,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     elseif(!empty($_POST['delete_snack'])){
         deleteSnack($_POST['snack_id'], $_POST['name'], $_POST['price'], $_POST['brand']);
     }
+    elseif(!empty($_POST['delete_user'])){
+        deleteUser($_POST['username']);
+    }
+    elseif(!empty($_POST['edit_user_role'])){
+        swapUserRole($_POST['username'], $_POST['role']);
+    }
 
     $movielist = allMovies();
     $theaterlist = getAllTheaters();
     $snackList = getAllSnacks();
     $theater_ids = array();
-    $userList = getAllUsers();
+    $userList = getAllUsers($_SESSION['username']);
   }
 
 
@@ -526,30 +533,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
                     <tr>
                         <th width="20%">Username</th>
                         <th width="15%">Is Admin</th>
+                        <th width="15%">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($userList as $user): ?>
                         <tr>
-                            <?php $movie = getMovieInfo($snack['movie_id']); ?>
-                            <td><?php echo $movie[0]['title']; ?></td>
-                            <td><?php echo $snack['name']; ?></td>
-                            <td><?php echo $snack['price'] ?></td>
-                            <td><?php echo $snack['brand']; ?></td>
-                            <td><?php echo $snack['type']; ?></td>
-                            <td><?php echo $snack['calories']; ?></td>
+                            <td><?php echo $user['username']; ?></td>
+                            <td><?php echo $user['is_admin']; ?></td>
                             <td>
-                                <!-- <form action="edit_snack.php" method="post" style="display: inline;">
-                                    <input type="hidden" name="snack_id" value="<?php echo $snack['snack_id']; ?>">
-                                    <button type="submit" name="action" value="edit_snack" class="btn btn-warning">Edit</button>
-                                </form> Got rid of this form cause of issues trying to update it with the table-->
+                            <form action="admin.php" method="post" style="display: inline;">
+                                    <input type="hidden" name="username" value="<?php echo $user['username']; ?>">
+                                    <input type="hidden" name="role" value="<?php echo $user['is_admin']; ?>">
+                                    <button type="submit" name="edit_user_role" value="edit_user_role" class="btn btn-warning">Switch Role</button>
+                                </form>
                                 <form action="admin.php" method="post" style="display: inline;">
-                                    <input type="hidden" name="snack_id" value="<?php echo $snack['snack_id']; ?>">
-                                    <input type="hidden" name="name" value="<?php echo $snack['name']; ?>">
-                                    <input type="hidden" name="price" value="<?php echo $snack['price']; ?>">
-                                    <input type="hidden" name="brand" value="<?php echo $snack['brand']; ?>">
-                                    <input type="hidden" name="type" value="<?php echo $snack['type']; ?>">
-                                    <button type="submit" name="delete_snack" value="delete_snack" class="btn btn-danger">Delete</button>
+                                    <input type="hidden" name="username" value="<?php echo $user['username']; ?>">
+                                    <button type="submit" name="delete_user" value="delete_user" class="btn btn-danger">Delete</button>
                                 </form>
                             </td>
                         </tr>
