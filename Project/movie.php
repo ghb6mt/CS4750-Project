@@ -38,7 +38,7 @@ include('navbar.php')
                     echo "Not Rated";
                 } ?></p>
     <p> Exclusive Movie Snack: </p>
-    <?php $snack = getSnacksForMovie($movie_id); ?>
+    <?php $snackList = getSnacksForMovie($movie_id); ?>
     <div class="row justify-content center">
     <table class="w3-table w3-bordered w3-card-4 center" style="width:70%">
     <thead>
@@ -50,13 +50,15 @@ include('navbar.php')
             <th width="30%">Calories
         </tr>
     </thead>
+    <?php foreach ($snackList as $snack): ?>
         <tr>
-            <td><?php echo $snack[0]['name']; ?></td>
-            <td><?php echo $snack[0]['price']; ?></td>
-            <td><?php echo $snack[0]['brand']; ?></td>
-            <td><?php echo $snack[0]['type']; ?></td>
-            <td><?php echo $snack[0]['calories']; ?></td>
+            <td><?php echo $snack['name']; ?></td>
+            <td><?php echo $snack['price']; ?></td>
+            <td><?php echo $snack['brand']; ?></td>
+            <td><?php echo $snack['type']; ?></td>
+            <td><?php echo $snack['calories']; ?></td>
     </tr>
+    <?php endforeach; ?>
     </table>
     <p>Next Showings: </p>
     <?php $showtimes = getSpecificMovieShowings($movie_id); ?>
