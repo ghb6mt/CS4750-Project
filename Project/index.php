@@ -11,7 +11,7 @@ require("utils.php");
 //     include('navbaradmin.html')
 // }
 
-include('navbar.html');
+include('navbar.php');
 
 ?>
 

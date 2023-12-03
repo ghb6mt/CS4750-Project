@@ -8,9 +8,7 @@ if($_SESSION['is_admin'] == 0){
 
 require("connect-db.php");
 require("utils.php");
-include("navbar.html");
-
-include('navbaradmin.html');
+include("navbar.php");
 
 //add if here to call right thing from utils
 
