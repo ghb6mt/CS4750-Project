@@ -5,7 +5,10 @@ session_start();
 require("connect-db.php");
 require("utils.php");
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-$movie_id = $_POST['id'];
+    $movie_id = $_POST['id'];
+    if(!empty($_POST['rate_movie'])){
+        rateMovie($_SESSION['username'],$movie_id, $_POST['stars'], $_POST['comment']);
+    }
 }
 elseif(isset($_GET['movie_id'])){
     $movie_id = $_GET['movie_id'];
@@ -55,5 +58,23 @@ include('navbar.html')
     </tr>
     <?php endforeach; ?>
     </table>
-</div>
+
+    <?php
+    if(!empty(hasUserRated($_SESSION['username'],$movie_id))){
+        echo "Already rated this movie!";
+    }
+    else{?>
+        <form action="movie.php" method="post">
+        <input type="hidden" name="id" value="<?php echo $movie_id ?>">
+        <label for="stars">Number of Stars:</label>
+        <input type="number" id="stars" name="stars" required><br>
+
+        <label for="comment">Comment</label>
+        <textarea name="comment" id="comment" required></textarea><br>
+
+
+        <input type="submit" name="rate_movie" value="Submit">
+    </form>
+   <?php } ?>
+    </div>
 </body>
