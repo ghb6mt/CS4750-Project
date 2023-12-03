@@ -107,6 +107,7 @@ include('navbar.html')
             <th width="30%">Age Rating
             <th width="30%">Genre
             <th width="30%">Runtime
+            <th width="30%">Rating
         </tr>
     </thead>
     <?php foreach ($filtered as $movie): ?>
@@ -119,12 +120,9 @@ include('navbar.html')
             <?php $genres = getMovieGenre($movie['movie_id']); ?>
             <td><?php echo $genres[0][0] ?></td>
             <td><?php echo $movie['runtime']; ?></td>
+            <?php $avg_rating = getAvgRating($movie['movie_id'])?>
+            <td><?php echo $avg_rating[0][0]; ?></td>
     </tr>
     <?php endforeach; ?>
     </table>
 </div>
-
-<form method="POST" action="movie.php">
-            <input type="number" placeholder="movie id here" name="id">
-            <input type="submit" value="Go to Movie Page">
-        </form>
