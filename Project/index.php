@@ -4,7 +4,15 @@ session_start();
 
 require("connect-db.php");
 require("utils.php");
-include('navbar.html')
+
+// if($_SESSION['is_admin'] == 0){
+//     include('navbar.html');
+// } else {
+//     include('navbaradmin.html')
+// }
+
+include('navbar.html');
+
 ?>
 
 <?php
@@ -120,8 +128,15 @@ include('navbar.html')
             <?php $genres = getMovieGenre($movie['movie_id']); ?>
             <td><?php echo $genres[0][0] ?></td>
             <td><?php echo $movie['runtime']; ?></td>
-            <?php $avg_rating = getAvgRating($movie['movie_id'])?>
-            <td><?php echo $avg_rating[0][0]; ?></td>
+            <?php $avg_rating = getAverageRatingForMovie($movie['movie_id'])?>
+            <td><?php 
+                if (is_numeric($avg_rating[0])) {
+                    echo $avg_rating[0];
+                } else {
+                    echo 0;
+                }
+                 
+            ?></td>
     </tr>
     <?php endforeach; ?>
     </table>

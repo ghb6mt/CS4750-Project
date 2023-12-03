@@ -10,6 +10,8 @@ require("connect-db.php");
 require("utils.php");
 include("navbar.html");
 
+include('navbaradmin.html');
+
 //add if here to call right thing from utils
 
 $movielist = allMovies();
