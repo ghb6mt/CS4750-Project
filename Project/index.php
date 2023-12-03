@@ -117,7 +117,7 @@ include('navbar.html')
             <?php $genres = getMovieGenre($movie['movie_id']); ?>
             <td><?php echo $genres[0][0] ?></td>
             <td><?php echo $movie['runtime']; ?></td>
-            <?php $avg_rating = getAvgRating($movie['movie_id'])?>
+            <?php $avg_rating = getAverageRatingForMovie($movie['movie_id'])?>
             <td><?php echo $avg_rating[0][0]; ?></td>
     </tr>
     <?php endforeach; ?>

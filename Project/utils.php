@@ -507,16 +507,14 @@ function searchByRuntime($runtime){
 function getAverageRatingForMovie($movieId){
     global $db;
 
-    $query = "CALL calc_avg_rating(:movieId, @avg_rating)";
+    $query = "SET @p0=':mid'; SET @p1=':mid'; CALL `calc_avg_rating`(@p0, @p1); SELECT @p1 AS `avgRating`;";
+    $statement->bindValue(':mid', $movieId);
     $statement = $db->prepare($query);
-    $statement->bindValue(':movieId', $movieId);
-
     $statement->execute();
-
-    $result = $db->query("SELECT @avg_rating AS average_rating")->fetch(PDO::FETCH_ASSOC);
+    $movies = $statement->fetchAll();
     $statement->closeCursor();
 
-    return $result['average_rating'];
+    return $movies;
 }
 
 function login($username, $password){
@@ -795,17 +793,6 @@ function swapUserRole($username, $admin){
     $statement->closeCursor(); //do this to close connection to DB, save resources
 }
 
-function getAvgRating($mid){
-    global $db;
-
-    $query = "SET @p0 = :mid; CALL calc_avg_rating(@p0, @p0);";
-    $statement = $db->prepare($query);
-    $statement->bindValue(':mid', $mid);
-    $statement->execute();
-    $avg = $statement->fetchAll();
-    $statement->closeCursor();
-    return $avg;
-}
 function getAllUsernames(){
     global $db;
 
