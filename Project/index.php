@@ -108,32 +108,6 @@ include('navbar.html')
     </thead>
     <?php foreach ($filtered as $movie): ?>
         <tr>
-            <td><?php echo $movie['title']; ?></td>
-            <?php $leadActor = getMovieLeadActor($movie['movie_id']); ?>
-            <td><?php echo $leadActor[0][0] ?></td>
-            <td><?php echo $movie['age_rating']; ?></td>
-            <?php $genres = getMovieGenre($movie['movie_id']); ?>
-            <td><?php echo $genres[0][0] ?></td>
-            <td><?php echo $movie['runtime']; ?></td>
-    </tr>
-    <?php endforeach; ?>
-    </table>
-</div>
-
-<h3>List of Movies</h3>
-<div class="row justify-content center">
-    <table class="w3-table w3-bordered w3-card-4 center" style="width:70%">
-    <thead>
-        <tr style="background-color:#B0B0B0">
-            <th width="30%">Movie Title
-            <th width="30%">Lead Actor
-            <th width="30%">Age Rating
-            <th width="30%">Genre
-            <th width="30%">Runtime
-        </tr>
-    </thead>
-    <?php foreach ($movielist as $movie): ?>
-        <tr>
             <?php $link = "movie.php?movie_id=". $movie['movie_id'];?>
             <td><?php echo "<a href='$link'>".$movie['title']; ?></td>
             <?php $leadActor = getMovieLeadActor($movie['movie_id']); ?>

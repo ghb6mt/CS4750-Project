@@ -10,6 +10,7 @@ $movie_id = $_POST['id'];
 elseif(isset($_GET['movie_id'])){
     $movie_id = $_GET['movie_id'];
 }
+include('navbar.html')
 ?>
 
 <head>
