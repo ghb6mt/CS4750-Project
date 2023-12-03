@@ -9,9 +9,21 @@ $movielist = allMovies();
 include('navbar.html')
 ?>
 
-<form action="users.php" method="GET">
-<input id="search" name="search" type="text" placeholder="Type here">
-<input id="submit" type="submit" value="Search">
+<?php
+    if(isset($_POST['search'])) {
+        $searchq = $_POST['search'];
+        $query = mysql_query("SELECT * FROM movies NATURAL JOIN genres NATURAL JOIN lead_actors WHERE title LIKE '%$searchq%'");
+        $statement = $db->prepare($query);
+        $statement->execute();
+        $showings = $statement->fetchAll();
+        $statement->closeCursor();
+        echo $showings;
+    }
+?>
+
+<form method="POST" action="index.php">
+    <input type="text" name="search" placeholder="Search by movie title">
+    <input type="submit" value="Search">
 </form>
 
 <h3>List of Movies</h3>
