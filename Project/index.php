@@ -5,12 +5,6 @@ session_start();
 require("connect-db.php");
 require("utils.php");
 
-// if($_SESSION['is_admin'] == 0){
-//     include('navbar.html');
-// } else {
-//     include('navbaradmin.html')
-// }
-
 include('navbar.php');
 
 ?>
@@ -133,7 +127,7 @@ include('navbar.php');
                 if (is_numeric($avg_rating[0])) {
                     echo $avg_rating[0];
                 } else {
-                    echo 0;
+                    echo "Not Rated";
                 }
                  
             ?></td>

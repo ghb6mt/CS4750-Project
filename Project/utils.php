@@ -819,3 +819,14 @@ function hasUserRated($username, $mid){
 
     return $ratings;
 }
+
+function getRatingsForMovie($mid) {
+    global $db;
+    $query = "SELECT number_of_stars, comment FROM rating where movie_id = $mid";
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $ratings = $statement->fetchAll();
+    $statement->closeCursor();
+
+    return $ratings;
+}
