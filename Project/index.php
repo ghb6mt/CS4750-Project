@@ -5,11 +5,13 @@ session_start();
 require("connect-db.php");
 require("utils.php");
 
-if($_SESSION['is_admin'] == 1){
-    include('navbaradmin.html');
-} else {
-    include('navbar.html')
-}
+// if($_SESSION['is_admin'] == 0){
+//     include('navbar.html');
+// } else {
+//     include('navbaradmin.html')
+// }
+
+include('navbar.html');
 
 ?>
 
