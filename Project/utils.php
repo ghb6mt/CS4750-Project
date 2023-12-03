@@ -841,3 +841,14 @@ function getUserFavorites($username) {
 
     return $ratings;
 }
+
+function getRecommendations($username) {
+    global $db;
+    $query = "SELECT movie_id FROM movies NATURAL JOIN genres WHERE genre IN (SELECT genre from favorites NATURAL JOIN genres WHERE username = '$username') AND movie_id NOT IN (SELECT movie_id FROM favorites WHERE username = '$username')";
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $ratings = $statement->fetchAll();
+    $statement->closeCursor();
+
+    return $ratings;
+}
