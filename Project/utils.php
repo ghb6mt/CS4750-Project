@@ -221,7 +221,7 @@ function getSnacksForMovie($mid){
 
 function rateMovie($username, $mid, $stars, $review){
     global $db;
-
+    $review = $db->quote($review);
     $query = "INSERT INTO rating VALUES (NULL, :username, :mid, :stars, :review);";
     $statement = $db->prepare($query);
     $statement->bindValue(':mid', $mid);
@@ -803,4 +803,16 @@ function getAllUsernames(){
     $statement->closeCursor();
 
     return $users;
+}
+
+function hasUserRated($username, $mid){
+    global $db;
+    $username = "'". $username . "'";
+    $query = "SELECT username, movie_id FROM rating where username = $username and movie_id = $mid";
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $ratings = $statement->fetchAll();
+    $statement->closeCursor();
+
+    return $ratings;
 }

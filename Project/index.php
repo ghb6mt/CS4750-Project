@@ -8,6 +8,9 @@ include('navbar.html')
 ?>
 
 <?php
+    if(!isset($_SESSION['username'])){
+        header("Location: login.html");
+    }
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         $query = "";
         if(isset($_POST['title'])) {
