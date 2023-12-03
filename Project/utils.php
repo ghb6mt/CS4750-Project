@@ -209,7 +209,7 @@ function addSnack($mid, $name, $price, $brand, $type, $cals){
 function getSnacksForMovie($mid){
     global $db;
 
-    $query = "SELECT * from snacks where movie_id = :mid";
+    $query = "SELECT * from snacks NATURAL JOIN snack_info where movie_id = :mid";
     $statement = $db->prepare($query);
     $statement->bindValue(':mid', $mid);
 

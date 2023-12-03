@@ -37,6 +37,27 @@ include('navbar.php')
                 } else {
                     echo "Not Rated";
                 } ?></p>
+    <p> Exclusive Movie Snack: </p>
+    <?php $snack = getSnacksForMovie($movie_id); ?>
+    <div class="row justify-content center">
+    <table class="w3-table w3-bordered w3-card-4 center" style="width:70%">
+    <thead>
+        <tr style="background-color:#B0B0B0">
+            <th width="30%">Name
+            <th width="30%">Price
+            <th width="30%">Brand
+            <th width="30%">Type
+            <th width="30%">Calories
+        </tr>
+    </thead>
+        <tr>
+            <td><?php echo $snack[0]['name']; ?></td>
+            <td><?php echo $snack[0]['price']; ?></td>
+            <td><?php echo $snack[0]['brand']; ?></td>
+            <td><?php echo $snack[0]['type']; ?></td>
+            <td><?php echo $snack[0]['calories']; ?></td>
+    </tr>
+    </table>
     <p>Next Showings: </p>
     <?php $showtimes = getSpecificMovieShowings($movie_id); ?>
     <div class="row justify-content center">
