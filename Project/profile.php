@@ -3,7 +3,7 @@
 session_start();
 require("connect-db.php");
 require("utils.php");
-include('navbar.html');
+include('navbar.php');
 $user = getUserInfo($_SESSION['username']);
 $user = $user[0];
 ?>
