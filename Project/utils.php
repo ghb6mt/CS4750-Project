@@ -62,7 +62,7 @@ function deleteMovie($mid){
 function updateMovie($attr, $val, $mid){
     global $db;
     $val = $db->quote($val);
-    $query = "UPDATE movies SET $attr = $val WHERE movie_id = :mid;";
+    $query = "UPDATE movies SET $attr = \'$val\' WHERE movie_id = :mid;";
     $statement = $db->prepare($query);
     $statement->bindValue(':mid', $mid);
 
@@ -139,16 +139,22 @@ function deleteMovieShowing($sid){
 
 //Only Admin Allowed
 function updateMovieShowing($attr, $val, $sid){
+    try{
     global $db;
-    $query = "UPDATE showing_info SET :attr = :val WHERE showing_id = :sid";
+    $query = "UPDATE showing_info SET $attr = :val WHERE showing_id = :sid;";
     $statement = $db->prepare($query);
     $statement->bindValue(':sid', $sid);
-    $statement->bindValue(':attr', $attr);
+    // $statement->bindValue(':attr', $attr);
     $statement->bindValue(':val', $val);
 
     $statement->execute();
 
     $statement->closeCursor(); //do this to close connection to DB, save resources
+    }
+    catch (PDOException $e) {
+        // Catch any database exceptions and display the error on your webpage
+        echo "Database Error: " . $e->getMessage();
+    }
 }
 
 //Only Admin Allowed
@@ -340,7 +346,7 @@ function updateUserInfo($username,$attr, $val){
 
     global $db;
 
-    $query = "UPDATE account SET :attr = :val WHERE username = “:username”";
+    $query = "UPDATE account SET :attr = :val WHERE username = :username";
     $statement = $db->prepare($query);
     $statement->bindValue(':username', $username);
     $statement->bindValue(':attr', $attr);
@@ -680,4 +686,17 @@ function getZipCode($city, $street, $state) {
     $statement->closeCursor();
 
     return $zc;
+}
+
+function getSingleShowing($sid) {
+    global $db;
+
+    $query = "SELECT * FROM showing_info where showing_id = :sid";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':sid', $sid);
+    $statement->execute();
+    $showing = $statement->fetchAll();
+    $statement->closeCursor();
+
+    return $showing;
 }
