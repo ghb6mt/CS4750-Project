@@ -33,6 +33,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     elseif(!empty($_POST['delete_theater'])) {
         deleteTheater($_POST['theater_id']);    
     }
+    elseif(!empty($_POST['delete_movie'])) {
+        deleteMovie($_POST['movie_id']);    
+    }
+    elseif(!empty($_POST['add_showing'])) {
+        $mytime = date("Y-m-d H:i:s", strtotime($_POST['time']));
+        addMovieShowing($_POST['movie_id'],$_POST['theater_id'],$mytime,$_POST['room']);  
+    }
+    elseif(!empty($_POST['delete_showing'])){
+        deleteMovieShowing($_POST['showing_id']);
+    }
 
     $movielist = allMovies();
     $theaterlist = getAllTheaters();
@@ -64,11 +74,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     </form>
 </div>
     <h2>Add Showing</h2>
-    <form method="post" action="addshowing.php">
+    <form method="post" action="admin.php">
         Movie ID: <input type="text" name="movie_id"><br>
-        Theater ID: <input type="text" name="runtime"><br>
-        Time: <input type="text" name="year"><br>
-        Room: <textarea name="desc"></textarea><br>
+        Theater ID: <input type="text" name="theater_id"><br>
+        Time: <input type="datetime-local" name="time"><br>
+        Room: <input type = "text" name="room"></input><br>
         <input type="submit" name="add_showing" value="Add Showing">
     </form>
 
@@ -112,9 +122,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
                         <input type="hidden" name="movie_id" value="<?php echo $movie['movie_id']; ?>">
                         <button type="submit" name="action" value="edit" class="btn btn-warning">Edit</button>
                     </form>
-                    <form action="delete_movie.php" method="post" style="display: inline;">
+                    <form action="admin.php" method="post" style="display: inline;">
                         <input type="hidden" name="movie_id" value="<?php echo $movie['movie_id']; ?>">
-                        <button type="submit" name="action" value="delete" class="btn btn-danger">Delete</button>
+                        <button type="submit" name="delete_movie" value="delete" class="btn btn-danger">Delete</button>
                     </form>
                 </td>
             </tr>
@@ -193,9 +203,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
                         <input type="hidden" name="showing_id" value="<?php echo $showing['showing_id']; ?>">
                         <button type="submit" name="action" value="edit_showing" class="btn btn-warning">Edit</button>
                     </form>
-                    <form action="delete_showing.php" method="post" style="display: inline;">
+                    <form action="admin.php" method="post" style="display: inline;">
                         <input type="hidden" name="showing_id" value="<?php echo $showing['showing_id']; ?>">
-                        <button type="submit" name="action" value="delete_showing" class="btn btn-danger">Delete</button>
+                        <button type="submit" name="delete_showing" value="delete_showing" class="btn btn-danger">Delete</button>
                     </form>
                 </td>
             </tr>

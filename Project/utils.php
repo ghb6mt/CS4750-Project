@@ -40,7 +40,14 @@ $statement->closeCursor();
 
 function deleteMovie($mid){
     global $db;
-    $query = "DELETE FROM movies WHERE movie_id = :mid ON DELETE CASCADE";
+    $query = " DELETE FROM rating WHERE movie_id = :mid;
+    DELETE FROM snacks WHERE movie_id = :mid;
+    DELETE FROM theater_to_movie WHERE movie_id = :mid;
+    DELETE FROM showing_info WHERE movie_id = :mid;
+    DELETE FROM favorites WHERE movie_id = :mid;
+    DELETE FROM genres WHERE movie_id = :mid;
+    DELETE FROM lead_actors WHERE movie_id = :mid;
+    DELETE FROM movies WHERE movie_id = :mid;";
 
     $statement = $db->prepare($query);
     $statement->bindValue(':mid', $mid);
@@ -102,8 +109,8 @@ function addMovieShowing($mid, $tid, $time, $room){
     $sidstatement->closeCursor();
     
 
-    $query = "INSERT INTO showing_info VALUES (NULL, :mid, :tid, :time, :room);
-    INSERT INTO `theater_to_movie` VALUES (:tid, :time, :room, :sid, :mid);";
+    $query = "INSERT INTO showing_info VALUES (:sid, :mid, :tid, :time, :room);
+    INSERT INTO theater_to_movie VALUES (:tid, :time, :room, :sid, :mid)";
     $statement = $db->prepare($query);
     $statement->bindValue(':tid', $tid);
     $statement->bindValue(':mid', $mid);
@@ -113,14 +120,14 @@ function addMovieShowing($mid, $tid, $time, $room){
 
 
     $statement->execute();
-
     $statement->closeCursor(); //do this to close connection to DB, save resources
 }
 
 //Only Admin Allowed
 function deleteMovieShowing($sid){
     global $db;
-    $query = "DELETE FROM showing_info WHERE showing_id = :sid";
+    $query = "DELETE FROM theater_to_movie WHERE showing_id = :sid;
+    DELETE FROM showing_info WHERE showing_id = :sid";
     $statement = $db->prepare($query);
     $statement->bindValue(':sid', $sid);
 
