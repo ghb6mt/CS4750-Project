@@ -46,6 +46,7 @@ if (count($showings) > 0) {
     <!-- Include any other necessary HTML headers here -->
 </head>
 <body>
+    <a href="admin.php">Back To Admin Dashboard</a>
     <form action="edit_showing.php" method="post"> <!-- Separate file for update logic -->
         <input type="hidden" name="showing_id" value="<?php echo $sid; ?>">
         <label for="title">Movie ID:</label>

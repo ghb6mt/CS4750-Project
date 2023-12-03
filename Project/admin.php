@@ -54,12 +54,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     $theaterlist = getAllTheaters();
     $snackList = getAllSnacks();
     $theater_ids = array();
+    $userList = getAllUsers();
   }
 
 
 ?>
 
-<!-- <head>
+<!-- 
+    This is the original everything we wrote by hand, but we used GPT to bootstrap it, just wanted to show the fact we
+    wrote it all by hand and only used GPT for the bootstrapping    
+<head>
     <title>Admin Page</title>
 </head>
 <body>
@@ -288,8 +292,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 <body>
     <div class="container">
         <h1 class="mt-4">Admin Dashboard</h1>
-
-        <!-- Form to Add Movies -->
         <div class="card mt-4">
             <div class="card-body">
                 <h3 class="card-title">Add Movie</h2>
@@ -306,7 +308,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
             </div>
         </div>
 
-        <!-- Add Showing Form -->
         <div class="card mt-4">
         <div class="card-body">
         <h2 class="card-title">Add Showing</h2>
@@ -320,7 +321,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         </div>
         </div>
 
-        <!-- Add Theater Form -->
         <div class="card mt-4">
         <div class="card-body">
         <h2 class="card-title">Add Theater</h2>
@@ -335,7 +335,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         </div>
         </div>
 
-           <!-- Add Snack Form -->
            <div class="card mt-4">
            <div class="card-body">
         <h2 class="card-title">Add Snack</h2>
@@ -351,7 +350,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
            </div>
            </div>
 
-        <!-- List of Movies Table -->
         <h3 class="mt-4">List of Movies</h3>
         <div class="row justify-content-center">
             <table class="table table-bordered table-striped">
@@ -496,10 +494,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
                             <td><?php echo $snack['type']; ?></td>
                             <td><?php echo $snack['calories']; ?></td>
                             <td>
-                                <form action="edit_snack.php" method="post" style="display: inline;">
+                                <!-- <form action="edit_snack.php" method="post" style="display: inline;">
                                     <input type="hidden" name="snack_id" value="<?php echo $snack['snack_id']; ?>">
                                     <button type="submit" name="action" value="edit_snack" class="btn btn-warning">Edit</button>
-                                </form>
+                                </form> Got rid of this form cause of issues trying to update it with the table-->
                                 <form action="admin.php" method="post" style="display: inline;">
                                     <input type="hidden" name="snack_id" value="<?php echo $snack['snack_id']; ?>">
                                     <input type="hidden" name="name" value="<?php echo $snack['name']; ?>">
@@ -515,7 +513,48 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
             </table>
         </div>
 
-        <!-- Your other table sections with Bootstrap styling -->
+
+        <h3 class="mt-4">List of Users</h3>
+        <div class="row justify-content-center">
+            <table class="table table-bordered table-striped">
+                <thead class="thead-light">
+                    <tr>
+                        <th width="20%">Username</th>
+                        <th width="15%">Is Admin</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($userList as $user): ?>
+                        <tr>
+                            <?php $movie = getMovieInfo($snack['movie_id']); ?>
+                            <td><?php echo $movie[0]['title']; ?></td>
+                            <td><?php echo $snack['name']; ?></td>
+                            <td><?php echo $snack['price'] ?></td>
+                            <td><?php echo $snack['brand']; ?></td>
+                            <td><?php echo $snack['type']; ?></td>
+                            <td><?php echo $snack['calories']; ?></td>
+                            <td>
+                                <!-- <form action="edit_snack.php" method="post" style="display: inline;">
+                                    <input type="hidden" name="snack_id" value="<?php echo $snack['snack_id']; ?>">
+                                    <button type="submit" name="action" value="edit_snack" class="btn btn-warning">Edit</button>
+                                </form> Got rid of this form cause of issues trying to update it with the table-->
+                                <form action="admin.php" method="post" style="display: inline;">
+                                    <input type="hidden" name="snack_id" value="<?php echo $snack['snack_id']; ?>">
+                                    <input type="hidden" name="name" value="<?php echo $snack['name']; ?>">
+                                    <input type="hidden" name="price" value="<?php echo $snack['price']; ?>">
+                                    <input type="hidden" name="brand" value="<?php echo $snack['brand']; ?>">
+                                    <input type="hidden" name="type" value="<?php echo $snack['type']; ?>">
+                                    <button type="submit" name="delete_snack" value="delete_snack" class="btn btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+
+
+
 
     </div>
 

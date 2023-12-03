@@ -4,10 +4,12 @@ session_start();
 
 require("connect-db.php");
 require("utils.php");
-
+if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 $movie_id = $_POST['id'];
-
-include('navbar.html')
+}
+elseif(isset($_GET['movie_id'])){
+    $movie_id = $_GET['movie_id'];
+}
 ?>
 
 <head>

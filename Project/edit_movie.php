@@ -51,6 +51,7 @@ if (count($movies) > 0) {
     <!-- Include any other necessary HTML headers here -->
 </head>
 <body>
+<a href="admin.php">Back To Admin Dashboard</a>
     <form action="edit_movie.php" method="post"> <!-- Separate file for update logic -->
         <input type="hidden" name="movie_id" value="<?php echo $movie_id; ?>">
         <label for="title">Movie Title:</label>

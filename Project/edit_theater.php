@@ -35,6 +35,7 @@ if ($theater) {
     <!-- Include any other necessary HTML headers here -->
 </head>
 <body>
+<a href="admin.php">Back To Admin Dashboard</a>
     <form action="update_theater.php" method="post"> <!-- Separate file for update logic -->
         <input type="hidden" name="theater_id" value="<?php echo $theater_id; ?>">
         <label for="company">Company:</label>

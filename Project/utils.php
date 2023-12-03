@@ -743,3 +743,16 @@ function deleteSnack($sid, $name, $price, $brand){
     $statement->closeCursor();
     
 }
+
+function getAllUsers($username){
+    global $db;
+
+    $query = "SELECT username, is_admin FROM account where username <> :username ";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':username', $username);
+    $statement->execute();
+    $users = $statement->fetchAll();
+    $statement->closeCursor();
+
+    return $users;
+}

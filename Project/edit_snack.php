@@ -61,6 +61,7 @@ if ($snack) {
         <!-- Add other form fields if needed -->
 
         <input type="submit" name= "update_snack" value="Submit">
+        <a href="admin.php">Go Back</a>
     </form>
 </body>
 </html>
