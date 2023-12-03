@@ -791,3 +791,15 @@ function swapUserRole($username, $admin){
 
     $statement->closeCursor(); //do this to close connection to DB, save resources
 }
+
+function getAvgRating($mid){
+    global $db;
+
+    $query = "SET @p0 = :mid; CALL calc_avg_rating(@p0, @p0);";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':mid', $mid);
+    $statement->execute();
+    $avg = $statement->fetchAll();
+    $statement->closeCursor();
+    return $avg;
+}
