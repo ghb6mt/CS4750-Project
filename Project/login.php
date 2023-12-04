@@ -30,11 +30,15 @@ if(isset($_POST['uname']) && isset($_POST['password'])){
             $_SESSION['is_admin'] = getUserAdmin($uname);
             if($_SESSION['is_admin']){
                 $_SESSION['db_uname'] = 'dnj6xk_b';
+                $db = NULL;
+                $db = reconnectDB();
                 header('Location: admin.php');
                 exit;
             }
             else{
                 $_SESSION['db_uname'] = 'dnj6xk_c';
+                $db = NULL;
+                $db = reconnectDB();
                 header('Location: index.php');
                 exit;
             }
