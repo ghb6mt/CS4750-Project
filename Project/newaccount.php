@@ -24,16 +24,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 <html>
     <head>
         <title>New Account</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
     </head>
 <body>
     <form action="newaccount.php" method="POST">
+    <div class="mb-3">
         <input type="text" name="uname" placeholder="User Name" required><br>
+    </div>
+    <div class="mb-3">
         <input type="password" name="password" placeholder="Password" required><br>
+    </div>
+    <div class="mb-3">
         <input type="text" name="first_name" placeholder="First Name" required><br>
+    </div>
+    <div class="mb-3">
         <input type="text" name="last_name" placeholder="Last Name" required><br>
+    </div>
+    <div class="mb-3">
         <input type="text" name="email" placeholder="Email" required><br>
+    </div>
+    <div class="mb-3">
         <input type="text" name="phone_number" placeholder="Phone Number" required><br>
-        <button type="submit">Create Account</button>
+    </div>
+        <button type="submit" class="btn btn-primary">Create Account</button>
     </form>
     <a href="login.html">Back To Login</a>
 </body>
