@@ -221,6 +221,7 @@ function getSnacksForMovie($mid){
 
 function rateMovie($username, $mid, $stars, $review){
     global $db;
+    try{
     $review = $db->quote($review);
     $query = "INSERT INTO rating VALUES (NULL, :username, :mid, :stars, :review);";
     $statement = $db->prepare($query);
@@ -232,6 +233,11 @@ function rateMovie($username, $mid, $stars, $review){
     $statement->execute();
 
     $statement->closeCursor();
+    } catch (PDOException $e) {
+        // Catch any database exceptions and display the error on your webpage
+        echo "Ratings have to be between 1-5 stars.";
+    }
+    
 }
 
 function favoriteMovie($username, $mid){
