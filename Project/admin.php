@@ -300,7 +300,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     <title>Admin Page</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <h3><?php echo $_SESSION['username'];?></h3>
 </head>
 <body>
     <div class="container">

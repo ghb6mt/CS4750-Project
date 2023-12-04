@@ -1,5 +1,6 @@
 <?php
 require('utils.php');
+include('navbar.php');
 $sid = $_POST['showing_id']; // Assuming movie_id is passed as a query parameter
 
 // Fetch movie data
@@ -43,25 +44,25 @@ if (count($showings) > 0) {
 <html>
 <head>
     <title>Edit Movie</title>
-    <!-- Include any other necessary HTML headers here -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
     <a href="admin.php">Back To Admin Dashboard</a>
     <form action="edit_showing.php" method="post"> <!-- Separate file for update logic -->
         <input type="hidden" name="showing_id" value="<?php echo $sid; ?>">
         <label for="title">Movie ID:</label>
-        <input type="text" id="movie_id" name="movie_id" value="<?php echo htmlspecialchars($movie_id); ?>"><br>
+        <input type="text" id="movie_id" class= "form-control"name="movie_id" value="<?php echo htmlspecialchars($movie_id); ?>"><br>
 
         <label for="tid">Theater ID:</label>
-        <input type="text" id="theater_id" name="theater_id" value="<?php echo htmlspecialchars($theater_id); ?>"><br>
+        <input type="text" id="theater_id" class= "form-control" name="theater_id" value="<?php echo htmlspecialchars($theater_id); ?>"><br>
 
         <label for="time">Time:</label>
-        <input type="datetime-local" id="time" name="time" value="<?php echo htmlspecialchars($time); ?>"><br>
+        <input type="datetime-local" class= "form-control" id="time" name="time" value="<?php echo htmlspecialchars($time); ?>"><br>
 
         <label for="room">Room:</label>
-        <input type="text" id="room" name="room" value="<?php echo htmlspecialchars($room); ?>"><br>
+        <input type="text" id="room" class= "form-control" name="room" value="<?php echo htmlspecialchars($room); ?>"><br>
 
-        <input type="submit" name="update_showing" value="Submit">
+        <input type="submit" name="update_showing" class="btn btn-primary" value="Submit">
     </form>
 </body>
 </html>
