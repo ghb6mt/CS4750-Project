@@ -42,7 +42,7 @@
             $snackList = getSnacksForMovie($movie_id);
             $showtimes = getSpecificMovieShowings($movie_id);
             $movie_ratings = getRatingsForMovie($movie_id);
-            $avg_rating = getAverageRatingForMovie($movie['movie_id']);
+            $avg_rating = getAverageRatingForMovie($movie_id);
         ?>
 
         <h1><?php echo $movie_info[0]['title'] ?></h1>
@@ -56,7 +56,6 @@
                 <p>Rating: <?php echo $movie_info[0]['age_rating'] ?></p>
                 <p>Runtime: <?php echo $movie_info[0]['runtime'] ?> minutes</p>
                 <p>Year: <?php echo $movie_info[0]['year'] ?></p>
-                <p>Year: <?php print_r($avg_rating) ?></p>
                 <p>Rating: <td><?php 
                     if (is_numeric($avg_rating[0])) {
                         echo $avg_rating[0];
