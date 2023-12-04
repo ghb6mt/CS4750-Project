@@ -10,7 +10,7 @@ if(!isset($_SESSION['username'])){
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     $movie_id = $_POST['id'];
     if(!empty($_POST['rate_movie'])){
-        rateMovie($_SESSION['username'],$movie_id, $_POST['stars'], $_POST['comment']);
+       echo rateMovie($_SESSION['username'],$movie_id, $_POST['stars'], $_POST['comment']);
     }
 }
 elseif(isset($_GET['movie_id'])){
