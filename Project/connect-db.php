@@ -46,8 +46,8 @@
 
 // Create session db_username, on successful login, set to correct username
 session_start();
-$_SESSION['db_uname'] = 'dnj6xk_a';
-$password = 'Superc00l1';
+$_SESSION['db_uname'] = 'dnj6xk_c';
+$password = 'Fall2023';
 $host = 'mysql01.cs.virginia.edu';
 $dbname = 'dnj6xk_c';
 $dsn = "mysql:host=$host;dbname=$dbname";
