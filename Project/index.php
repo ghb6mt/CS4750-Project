@@ -23,6 +23,7 @@ include('navbar.php');
         $query = "";
         if(isset($_POST['title'])) {
             $title = $_POST['title'];
+            $title = stripslashes($title);
             if(empty($query)) {
                 $query = "SELECT * FROM movies NATURAL JOIN genres NATURAL JOIN lead_actors WHERE title LIKE '%$title%'";
             }
@@ -32,6 +33,7 @@ include('navbar.php');
         }
         if(isset($_POST['actor'])) {
             $actor = $_POST['actor'];
+            $actor = stripslashes($actor);
             if(empty($query)) {
                 $query = "SELECT * FROM movies NATURAL JOIN genres NATURAL JOIN lead_actors WHERE lead_actor LIKE '%$actor%'";
             }
