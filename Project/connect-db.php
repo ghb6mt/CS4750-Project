@@ -45,9 +45,11 @@
 
 
 // Create session db_username, on successful login, set to correct username
-session_start();
-if(!isset($_SESSION['db_uname'])){
-$_SESSION['db_uname'] = 'dnj6xk_a';
+if (session_status() == PHP_SESSION_NONE) {
+   session_start();
+}
+if (!isset($_SESSION['db_uname'])){
+   $_SESSION['db_uname'] = 'dnj6xk_a';
 }
 $dbpassword = 'Fall2023';
 $host = 'mysql01.cs.virginia.edu';
