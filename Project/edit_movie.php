@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
             updateMovieGenre($value,$_POST['movie_id']);
         }
         else{
-            header("Location: admin.php");
+           header("Location: admin.php");
         }
         endforeach;
     }

@@ -62,14 +62,12 @@ function deleteMovie($mid){
 function updateMovie($attr, $val, $mid){
     global $db;
     $val = $db->quote($val);
-    $query = "UPDATE movies SET $attr = \'$val\' WHERE movie_id = :mid;";
+    $query = "UPDATE movies SET $attr = $val WHERE movie_id = :mid;";
     $statement = $db->prepare($query);
     $statement->bindValue(':mid', $mid);
 
     $statement->execute();
-
     $statement->closeCursor(); //do this to close connection to DB, save resources
-
 }
 
 function updateMovieGenre($val, $mid){
