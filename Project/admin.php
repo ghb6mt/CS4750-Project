@@ -308,13 +308,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
             <div class="card-body">
                 <h3 class="card-title">Add Movie</h2>
                 <form method="post" action="admin.php">
-                    Title: <input type="text" name="title" class="form-control"><br>
-                    Runtime: <input type="text" name="runtime" class="form-control"><br>
-                    Year: <input type="text" name="year" class="form-control"><br>
-                    Description: <textarea name="desc" class="form-control"></textarea><br>
-                    Age Rating: <input type="text" name="age" class="form-control"><br>
-                    Genre: <input type="text" name="genre" class="form-control"><br>
-                    Lead Actor: <input type="text" name="lead" class="form-control"><br>
+                    Title: <input type="text" name="title" class="form-control" required><br>
+                    Runtime: <input type="text" name="runtime" class="form-control"required><br>
+                    Year: <input type="text" name="year" class="form-control"required><br>
+                    Description: <textarea name="desc" class="form-control"required></textarea><br>
+                    Age Rating: <input type="text" name="age" class="form-control"required><br>
+                    Genre: <input type="text" name="genre" class="form-control"required><br>
+                    Lead Actor: <input type="text" name="lead" class="form-control"required><br>
                     <input type="submit" name="add_movie" value="Add Movie" class="btn btn-primary">
                 </form>
             </div>
@@ -324,10 +324,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         <div class="card-body">
         <h2 class="card-title">Add Showing</h2>
         <form method="post" action="admin.php">
-            Movie ID: <input type="text" name="movie_id" class="form-control"><br>
-            Theater ID: <input type="text" name="theater_id" class="form-control"><br>
-            Time: <input type="datetime-local" name="time" class="form-control"><br>
-            Room: <input type="text" name="room" class="form-control"></input><br>
+            Movie ID: <input type="text" name="movie_id" class="form-control"required><br>
+            Theater ID: <input type="text" name="theater_id" class="form-control"required><br>
+            Time: <input type="datetime-local" name="time" class="form-control"required><br>
+            Room: <input type="text" name="room" class="form-control"required></input><br>
             <input type="submit" name="add_showing" value="Add Showing" class="btn btn-primary">
         </form>
         </div>
@@ -337,11 +337,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         <div class="card-body">
         <h2 class="card-title">Add Theater</h2>
         <form method="post" action="admin.php">
-            City <input type="text" name="city" class="form-control"><br>
-            Street: <input type="text" name="street" class="form-control"><br>
-            State: <input type="text" name="state" class="form-control"><br>
-            Company: <input type="text" name="company" class="form-control"><br>
-            Zip Code: <input type="text" name="zip" class="form-control"><br>
+            City <input type="text" name="city" class="form-control"required><br>
+            Street: <input type="text" name="street" class="form-control"required><br>
+            State: <input type="text" name="state" class="form-control"required><br>
+            Company: <input type="text" name="company" class="form-control"required><br>
+            Zip Code: <input type="text" name="zip" class="form-control"required><br>
             <input type="submit" name="add_theater" value="Add Theater" class="btn btn-primary">
         </form>
         </div>
@@ -351,12 +351,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
            <div class="card-body">
         <h2 class="card-title">Add Snack</h2>
         <form method="post" action="admin.php">
-            Name: <input type="text" name="name" class="form-control"><br>
-            Price: <input type="text" name="price" class="form-control"><br>
-            Brand: <input type="text" name="brand" class="form-control"><br>
-            Type: <input type="text" name="type" class="form-control"><br>
-            Calories: <input type="text" name="calories" class="form-control"><br>
-            Movie ID: <input type="text" name="movie_id" class="form-control"><br>
+            Name: <input type="text" name="name" class="form-control"required><br>
+            Price: <input type="text" name="price" class="form-control"required><br>
+            Brand: <input type="text" name="brand" class="form-control"required><br>
+            Type: <input type="text" name="type" class="form-control"required><br>
+            Calories: <input type="text" name="calories" class="form-control"required><br>
+            Movie ID: <input type="text" name="movie_id" class="form-control"required><br>
             <input type="submit" name="add_snack" value="Add Snack" class="btn btn-primary">
         </form>
            </div>
