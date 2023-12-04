@@ -856,3 +856,34 @@ function getRecommendations($username) {
 
     return $ratings;
 }
+
+function reconnectDB(){
+    $dbpassword = 'Fall2023';
+    $host = 'mysql01.cs.virginia.edu';
+    $dbname = 'dnj6xk_c';
+    $dsn = "mysql:host=$host;dbname=$dbname";
+
+    try 
+    {
+    //  $db = new PDO("mysql:host=$hostname;dbname=db-demo", $username, $password);
+    
+    $db = new PDO($dsn, $_SESSION['db_uname'], $dbpassword);
+    return $db;
+    
+    // dispaly a message to let us know that we are connected to the database 
+    // echo "<p>You are connected to the database: $dsn</p>";
+    }
+    catch (PDOException $e)     // handle a PDO exception (errors thrown by the PDO library)
+    {
+    // Call a method from any object, use the object's name followed by -> and then method's name
+    // All exception objects provide a getMessage() method that returns the error message 
+    $error_message = $e->getMessage();        
+    return "<p>An error occurred while connecting to the database: $error_message </p>";
+    }
+    catch (Exception $e)       // handle any type of exception
+    {
+    $error_message = $e->getMessage();
+    return "<p>Error message: $error_message </p>";
+    }
+
+}
