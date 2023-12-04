@@ -14,7 +14,9 @@
     <div class="container mt-5">
 
         <?php
-            session_start();
+            if (session_status() == PHP_SESSION_NONE) { 
+                session_start(); 
+            }
 
             require("connect-db.php");
             require("utils.php");
