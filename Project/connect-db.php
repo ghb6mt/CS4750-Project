@@ -45,9 +45,11 @@
 
 
 // Create session db_username, on successful login, set to correct username
-if (session_status() == PHP_SESSION_NONE) { session_start(); }
-$_SESSION['db_uname'] = 'dnj6xk_c';
-$password = 'Fall2023';
+session_start();
+if(!isset($_SESSION['db_uname'])){
+$_SESSION['db_uname'] = 'dnj6xk_a';
+}
+$dbpassword = 'Fall2023';
 $host = 'mysql01.cs.virginia.edu';
 $dbname = 'dnj6xk_c';
 $dsn = "mysql:host=$host;dbname=$dbname";
@@ -86,7 +88,7 @@ $dsn = "mysql:host=$host;dbname=$dbname";
 try 
 {
 //  $db = new PDO("mysql:host=$hostname;dbname=db-demo", $username, $password);
-   $db = new PDO($dsn, $_SESSION['db_uname'], $password);
+   $db = new PDO($dsn, $_SESSION['db_uname'], $dbpassword);
    
    // dispaly a message to let us know that we are connected to the database 
   // echo "<p>You are connected to the database: $dsn</p>";
