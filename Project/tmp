@@ -1,0 +1,23 @@
+GRANT SELECT, INSERT ON dnj6xk_c.account TO 'dnj6xk_a'@'%';
+GRANT SELECT ON dnj6xk_c.email_addresses TO 'dnj6xk_a'@'%';
+GRANT SELECT ON dnj6xk_c.phone_numbers TO 'dnj6xk_a'@'%';
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON dnj6xk_c.* TO 'dnj6xk_b'@'%';
+
+GRANT SELECT ON dnj6xk_c.showing_info TO 'dnj6xk_c'@'%';
+GRANT SELECT ON dnj6xk_c.snacks TO 'dnj6xk_c'@'%';
+GRANT SELECT ON dnj6xk_c.theater_company TO 'dnj6xk_c'@'%';
+GRANT SELECT ON dnj6xk_c.snack_info TO 'dnj6xk_c'@'%';
+GRANT SELECT ON dnj6xk_c.zip_codes TO 'dnj6xk_c'@'%';
+GRANT SELECT ON dnj6xk_c.genres TO 'dnj6xk_c'@'%';
+GRANT SELECT ON dnj6xk_c.theater_to_movie TO 'dnj6xk_c'@'%';
+GRANT SELECT ON dnj6xk_c.theaters TO 'dnj6xk_c'@'%';
+GRANT SELECT ON dnj6xk_c.movies TO 'dnj6xk_c'@'%';
+GRANT SELECT ON dnj6xk_c.lead_actors TO 'dnj6xk_c'@'%';
+GRANT SELECT ON dnj6xk_c.account TO 'dnj6xk_c'@'%';
+GRANT SELECT ON dnj6xk_c.email_addresses TO 'dnj6xk_c'@'%';
+GRANT SELECT ON dnj6xk_c.phone_numbers TO 'dnj6xk_c'@'%';
+GRANT SELECT, INSERT, UPDATE, DELETE ON dnj6xk_c.favorites TO 'dnj6xk_c'@'%';
+GRANT SELECT, INSERT ON dnj6xk_c.rating TO 'dnj6xk_c'@'%';
+
+FLUSH PRIVILEGES;
